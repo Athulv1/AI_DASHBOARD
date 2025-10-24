@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DXF Canvas Editor - Fixture Mover</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 DXF Canvas Fixture Editor</h1>
+            <p>Upload, visualize, drag fixtures, and download modified DXF files</p>
+        </header>
+
+        <!-- Upload Section -->
+        <section id="upload-section" class="section">
+            <div class="upload-area">
+                <h2>📁 Upload Your DXF File</h2>
+                <input type="file" id="dxf-upload" accept=".dxf" style="display:none;">
+                <button class="btn btn-primary" onclick="document.getElementById('dxf-upload').click()">
+                    Choose DXF File
+                </button>
+                <p class="hint">Supports AutoCAD DXF files (max 50MB)</p>
+                <div id="upload-status"></div>
+            </div>
+        </section>
+
+        <!-- Canvas Section -->
+        <section id="canvas-section" class="section" style="display:none;">
+            <div class="canvas-header">
+                <h2>📐 Blueprint Canvas</h2>
+                <div class="file-info">
+                    <span id="current-filename">Loading...</span>
+                    <span id="fixture-count"></span>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="canvas-container">
+                <canvas id="canvas" width="1200" height="800"></canvas>
+                
+                <!-- Controls Overlay -->
+                <div class="canvas-controls">
+                    <button class="btn btn-zoom" onclick="editor.zoomIn()">🔍+</button>
+                    <button class="btn btn-zoom" onclick="editor.zoomOut()">🔍-</button>
+                    <button class="btn btn-zoom" onclick="editor.resetView()">⟲ Reset</button>
+                </div>
+            </div>
+
+            <!-- Coordinate Display -->
+            <div class="info-panel">
+                <h3>📍 Fixture Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Selected:</label>
+                        <span id="selected-fixture" class="value">None</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Start Position:</label>
+                        <span id="start-coords" class="value">(0.00, 0.00)</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Current Position:</label>
+                        <span id="current-coords" class="value">(0.00, 0.00)</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Delta (ΔX, ΔY):</label>
+                        <span id="delta-coords" class="value">(0.00, 0.00)</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Distance Moved:</label>
+                        <span id="distance-moved" class="value">0.00 mm</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="actions">
+                <button class="btn btn-success" onclick="downloadDXF()">
+                    📥 Download Modified DXF
+                </button>
+                <button class="btn btn-secondary" onclick="resetCanvas()">
+                    🔄 Reset All Changes
+                </button>
+                <button class="btn btn-secondary" onclick="showUploadSection()">
+                    📁 Upload New File
+                </button>
+            </div>
+
+            <!-- Status Messages -->
+            <div id="status-message" class="status-message"></div>
+        </section>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" style="display:none;">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/canvas-editor.js') }}"></script>
+    <script>
+        // Initialize on page load
+        let editor;
+        let currentSessionId = null;
+
+        // Handle file upload
+        document.getElementById('dxf-upload').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            await uploadDXF(file);
+        });
+
+        async function uploadDXF(file) {
+            const uploadStatus = document.getElementById('upload-status');
+            uploadStatus.innerHTML = '<div class="loading">📤 Uploading and processing DXF file...</div>';
+            
+            showLoading();
+
+            const formData = new FormData();
+            formData.append('dxf_file', file);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Store session ID
+                currentSessionId = data.session_id;
+
+                // Hide upload section, show canvas
+                document.getElementById('upload-section').style.display = 'none';
+                document.getElementById('canvas-section').style.display = 'block';
+
+                // Update file info
+                document.getElementById('current-filename').textContent = data.filename;
+                document.getElementById('fixture-count').textContent = 
+                    `${data.canvas_data.fixture_count} fixtures`;
+
+                // Initialize canvas editor
+                editor = new CanvasEditor('canvas', currentSessionId);
+                editor.loadCanvasData(data.canvas_data);
+
+                hideLoading();
+                showStatus('✅ DXF loaded successfully! Drag fixtures to move them.', 'success');
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                uploadStatus.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+                hideLoading();
+            }
+        }
+
+        async function downloadDXF() {
+            if (!currentSessionId) {
+                showStatus('❌ No session active', 'error');
+                return;
+            }
+
+            showLoading();
+            showStatus('📥 Generating modified DXF file...', 'info');
+
+            try {
+                const response = await fetch(`/download/${currentSessionId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Download failed');
+                }
+
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = document.getElementById('current-filename').textContent.replace('.dxf', '-MODIFIED.dxf');
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                hideLoading();
+                showStatus('✅ DXF file downloaded successfully!', 'success');
+
+            } catch (error) {
+                console.error('Download error:', error);
+                hideLoading();
+                showStatus('❌ Download failed: ' + error.message, 'error');
+            }
+        }
+
+        function resetCanvas() {
+            if (confirm('Reset all changes and reload the original DXF?')) {
+                location.reload();
+            }
+        }
+
+        function showUploadSection() {
+            document.getElementById('canvas-section').style.display = 'none';
+            document.getElementById('upload-section').style.display = 'block';
+            currentSessionId = null;
+        }
+
+        function showLoading() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+
+        function showStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.className = `status-message ${type}`;
+            statusEl.style.display = 'block';
+
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
