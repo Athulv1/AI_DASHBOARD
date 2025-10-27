@@ -77,7 +77,7 @@
 
             <!-- AI Prompt Section -->
             <div class="prompt-section">
-                <h3>🤖 AI-Generated Movement Prompt (Editable)</h3>
+                <h3>🤖 AI-Generated Movement Prompt </h3>
                 <div class="prompt-display">
                     <textarea id="movement-prompt" rows="6" placeholder="Move fixtures on the canvas... prompts will appear here automatically. You can edit them before generating."></textarea>
                     <div class="prompt-actions">
@@ -252,7 +252,7 @@
                 start: startPos,
                 end: endPos,
                 delta: delta,
-                description: generatePromptDescription(fixtureName, delta)
+                description: generatePromptDescription(fixtureName, delta, startPos, endPos)
             };
             
             movementPrompts.push(prompt);
@@ -262,7 +262,7 @@
             document.getElementById('generate-btn').disabled = false;
         }
 
-        function generatePromptDescription(fixtureName, delta) {
+        function generatePromptDescription(fixtureName, delta, startPos, endPos) {
             const [dx, dy] = delta;
             let parts = [];
             
@@ -281,7 +281,9 @@
                 return `Move ${fixtureName} (no significant movement)`;
             }
             
-            return `Move ${fixtureName} ${parts.join(' and ')}`;
+            // Include ABSOLUTE target coordinates for Gemini
+            const [endX, endY] = endPos;
+            return `Move ${fixtureName} ${parts.join(' and ')} to position (${endX.toFixed(1)}, ${endY.toFixed(1)})`;
         }
 
         function updatePromptDisplay() {

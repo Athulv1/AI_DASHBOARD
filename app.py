@@ -729,32 +729,47 @@ def generate_with_ai():
                 })
         
         # Create comprehensive AI prompt that understands MOVE, COPY, DELETE
+        # Include fixture positions for Gemini to calculate relative movements
+        fixtures_with_pos = [
+            f"{f['name']} at ({f['position'][0]:.1f}, {f['position'][1]:.1f})" 
+            for f in all_fixtures[:20]
+        ]
+        
         ai_prompt = f"""You are a DXF fixture modification assistant. Parse the user's command and generate the appropriate JSON modifications.
 
-Available fixtures in the DXF file:
-{json.dumps([f['name'] for f in all_fixtures[:20]], indent=2)}
+Available fixtures in the DXF file (with current positions):
+{chr(10).join(fixtures_with_pos)}
 (showing first 20 fixtures)
 
 User's Command:
 {user_prompt}
 
-Instructions:
-1. Understand commands: MOVE, COPY, DELETE
-2. For MOVE: Change fixture position to new coordinates
-3. For COPY: Create a new fixture at the specified position (add "_COPY" suffix to name)
-4. For DELETE: Remove the fixture from modelspace
+IMPORTANT Instructions:
+1. Commands can be: MOVE, COPY, or DELETE
+2. When the command includes "to position (X, Y)" - use those EXACT coordinates as new_position
+3. When the command says "500mm right" - add 500 to the X coordinate
+4. When the command says "500mm left" - subtract 500 from the X coordinate  
+5. When the command says "500mm up" - add 500 to the Y coordinate
+6. When the command says "500mm down" - subtract 500 from the Y coordinate
+7. ALWAYS include original_position from the fixtures list above
 
-Output JSON format:
+Output JSON format (REQUIRED):
 {{
   "fixtures": [
     {{
-      "block_name": "FIXTURE_NAME",
-      "operation": "move|copy|delete",
-      "original_position": [x, y],
-      "new_position": [x, y]  // Only for move/copy, omit for delete
+      "block_name": "EXACT_FIXTURE_NAME_FROM_LIST",
+      "operation": "move",
+      "original_position": [current_x, current_y],
+      "new_position": [new_x, new_y]
     }}
   ]
 }}
+
+CRITICAL: 
+- Use EXACT fixture names from the list above
+- Include original_position (current position from DXF)
+- Include new_position (target coordinates)
+- For relative movements (left/right/up/down), calculate from original_position
 
 Generate ONLY valid JSON without any markdown formatting or explanations.
 """
