@@ -1,9 +1,0 @@
-{
-  "fixtures": [
-    {
-      "block_name": "FIXTURE-NAME-HERE",
-      "original_position": [ORIGINAL_X, ORIGINAL_Y],
-      "new_position": [NEW_X, NEW_Y]
-    }
-  ]
-}

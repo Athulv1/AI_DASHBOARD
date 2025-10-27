@@ -1,6 +1,0 @@
-  File "/home/athul/JSON_TO_DXF/JSON_TO_DXF/app.py", line 255
-    elif entity['dxf_type'] in ['LINE', 'LWPOLYLINE', 'POLYLINE', 'CIRCLE', 'ARC']:
-IndentationError: unexpected indent
-  File "/home/athul/JSON_TO_DXF/JSON_TO_DXF/app.py", line 255
-    elif entity['dxf_type'] in ['LINE', 'LWPOLYLINE', 'POLYLINE', 'CIRCLE', 'ARC']:
-IndentationError: unexpected indent
