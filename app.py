@@ -745,30 +745,40 @@ User's Command:
 {user_prompt}
 
 IMPORTANT Instructions:
-1. Commands can be: MOVE, COPY, or DELETE
+1. Commands can be: MOVE, COPY, DELETE, or ROTATE
 2. When the command includes "to position (X, Y)" - use those EXACT coordinates as new_position
 3. When the command says "500mm right" - add 500 to the X coordinate
 4. When the command says "500mm left" - subtract 500 from the X coordinate  
 5. When the command says "500mm up" - add 500 to the Y coordinate
 6. When the command says "500mm down" - subtract 500 from the Y coordinate
-7. ALWAYS include original_position from the fixtures list above
+7. For ROTATE: Extract rotation angle in degrees (e.g., "rotate 90 degrees", "rotate by 45")
+8. ALWAYS include original_position from the fixtures list above
 
 Output JSON format (REQUIRED):
 {{
   "fixtures": [
     {{
       "block_name": "EXACT_FIXTURE_NAME_FROM_LIST",
-      "operation": "move",
+      "operation": "move|copy|delete|rotate",
       "original_position": [current_x, current_y],
-      "new_position": [new_x, new_y]
+      "new_position": [new_x, new_y],
+      "rotation": 90  // Only for rotate operation, angle in degrees
     }}
   ]
 }}
 
+Examples:
+- "Move X to position (1500, 2000)" → operation: "move", new_position: [1500, 2000]
+- "Copy X 500mm right" → operation: "copy", calculate new_position from original + 500 in X
+- "Delete X" → operation: "delete", no new_position needed
+- "Rotate X 90 degrees" → operation: "rotate", rotation: 90, keep same position
+- "Rotate X by 45" → operation: "rotate", rotation: 45
+
 CRITICAL: 
 - Use EXACT fixture names from the list above
 - Include original_position (current position from DXF)
-- Include new_position (target coordinates)
+- Include new_position (target coordinates) for move/copy
+- Include rotation angle for rotate operations
 - For relative movements (left/right/up/down), calculate from original_position
 
 Generate ONLY valid JSON without any markdown formatting or explanations.
@@ -821,7 +831,8 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
         operations_count = {
             'moved': 0,
             'copied': 0,
-            'deleted': 0
+            'deleted': 0,
+            'rotated': 0
         }
         for fixture in modifications.get('fixtures', []):
             op = fixture.get('operation', 'move').lower()
@@ -831,10 +842,25 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
                 operations_count['copied'] += 1
             elif op == 'delete':
                 operations_count['deleted'] += 1
+            elif op == 'rotate':
+                operations_count['rotated'] += 1
+        
+        # Build message
+        parts = []
+        if operations_count['moved'] > 0:
+            parts.append(f"{operations_count['moved']} moved")
+        if operations_count['copied'] > 0:
+            parts.append(f"{operations_count['copied']} copied")
+        if operations_count['deleted'] > 0:
+            parts.append(f"{operations_count['deleted']} deleted")
+        if operations_count['rotated'] > 0:
+            parts.append(f"{operations_count['rotated']} rotated")
+        
+        message = f"✅ Processed: {', '.join(parts)}"
         
         return jsonify({
             'success': True,
-            'message': f"✅ Processed: {operations_count['moved']} moved, {operations_count['copied']} copied, {operations_count['deleted']} deleted",
+            'message': message,
             'operations': operations_count
         })
     
@@ -853,7 +879,7 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
 
 def apply_ai_modifications(session_id, modifications):
     """
-    Apply AI-generated modifications (MOVE, COPY, DELETE) directly to the DXF file
+    Apply AI-generated modifications (MOVE, COPY, DELETE, ROTATE) directly to the DXF file
     Uses the same method as prompt-based model - modifies original DXF, doesn't recreate from JSON
     Returns path to the modified DXF file
     """
@@ -964,6 +990,30 @@ def apply_ai_modifications(session_id, modifications):
                         break
                     else:
                         print(f"      ⚠️  Invalid position data for {block_name}")
+                        break
+        
+        elif operation == 'rotate':
+            # Rotate fixture by specified angle
+            rotation_angle = mod.get('rotation', 0)
+            
+            for entity in msp:
+                if entity.dxftype() == 'INSERT' and entity.dxf.name == block_name:
+                    if orig_pos and len(orig_pos) >= 2:
+                        # Match by position
+                        pos = entity.dxf.insert
+                        if abs(pos.x - orig_pos[0]) < 0.1 and abs(pos.y - orig_pos[1]) < 0.1:
+                            # Get current rotation and add new angle
+                            current_rotation = entity.dxf.rotation if hasattr(entity.dxf, 'rotation') else 0
+                            entity.dxf.rotation = current_rotation + rotation_angle
+                            changes_made += 1
+                            print(f"      ✅ Rotated {block_name} by {rotation_angle}° (total: {entity.dxf.rotation:.1f}°)")
+                            break
+                    else:
+                        # Rotate first instance if no position specified
+                        current_rotation = entity.dxf.rotation if hasattr(entity.dxf, 'rotation') else 0
+                        entity.dxf.rotation = current_rotation + rotation_angle
+                        changes_made += 1
+                        print(f"      ✅ Rotated {block_name} by {rotation_angle}° (total: {entity.dxf.rotation:.1f}°)")
                         break
     
     if changes_made == 0:
