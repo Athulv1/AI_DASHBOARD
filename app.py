@@ -728,31 +728,61 @@ def generate_with_ai():
                     'layer': entity.get('layer', '0')
                 })
         
-        # Create comprehensive AI prompt that understands MOVE, COPY, DELETE
-        # Include fixture positions for Gemini to calculate relative movements
+        # Parse selected fixtures from user prompt (if any)
+        selected_fixture_names = []
+        if 'Selected fixtures:' in user_prompt:
+            # Extract fixture names from "Selected fixtures: X, Y, Z" line
+            selected_line = user_prompt.split('\n')[0]
+            if 'Selected fixtures:' in selected_line:
+                fixtures_str = selected_line.split('Selected fixtures:')[1].strip()
+                selected_fixture_names = [name.strip() for name in fixtures_str.split(',')]
+                print(f"📌 User selected {len(selected_fixture_names)} fixtures: {selected_fixture_names}")
+        
+        # Create comprehensive AI prompt that understands MOVE, COPY, DELETE, ROTATE, and REARRANGE
+        # Include ALL fixture positions (not just first 20) for Gemini to find them
         fixtures_with_pos = [
             f"{f['name']} at ({f['position'][0]:.1f}, {f['position'][1]:.1f})" 
-            for f in all_fixtures[:20]
+            for f in all_fixtures  # Send ALL fixtures, not just [:20]
         ]
+        
+        # Check if this is a rearrangement command (user selected multiple fixtures)
+        is_rearrangement = 'rearrange' in user_prompt.lower() or 'organize' in user_prompt.lower() or 'layout' in user_prompt.lower()
+        
+        # Build additional context for Gemini if fixtures are selected
+        selection_context = ""
+        if selected_fixture_names:
+            selection_context = f"""
+
+⚠️ CRITICAL: The user has selected {len(selected_fixture_names)} fixtures that MUST ALL be moved:
+{chr(10).join([f"  {i+1}. {name}" for i, name in enumerate(selected_fixture_names)])}
+
+YOU MUST generate exactly {len(selected_fixture_names)} move operations - one for EACH fixture listed above.
+Do NOT skip any fixtures. Do NOT move only some of them.
+EVERY fixture in the list must appear in your JSON output.
+"""
         
         ai_prompt = f"""You are a DXF fixture modification assistant. Parse the user's command and generate the appropriate JSON modifications.
 
 Available fixtures in the DXF file (with current positions):
 {chr(10).join(fixtures_with_pos)}
-(showing first 20 fixtures)
-
+{selection_context}
 User's Command:
 {user_prompt}
 
 IMPORTANT Instructions:
-1. Commands can be: MOVE, COPY, DELETE, or ROTATE
+1. Commands can be: MOVE, COPY, DELETE, ROTATE, or REARRANGE multiple fixtures
 2. When the command includes "to position (X, Y)" - use those EXACT coordinates as new_position
 3. When the command says "500mm right" - add 500 to the X coordinate
 4. When the command says "500mm left" - subtract 500 from the X coordinate  
 5. When the command says "500mm up" - add 500 to the Y coordinate
 6. When the command says "500mm down" - subtract 500 from the Y coordinate
 7. For ROTATE: Extract rotation angle in degrees (e.g., "rotate 90 degrees", "rotate by 45")
-8. ALWAYS include original_position from the fixtures list above
+8. For REARRANGE: YOU MUST move ALL fixtures listed in "Selected fixtures:" line
+   - Parse the comma-separated fixture names from the first line
+   - Create ONE move operation for EACH fixture name in that list
+   - Find their current positions from the fixtures list above
+   - Calculate non-overlapping new positions
+9. ALWAYS include original_position from the fixtures list above
 
 Output JSON format (REQUIRED):
 {{
@@ -768,30 +798,58 @@ Output JSON format (REQUIRED):
 }}
 
 Examples:
-- "Move X to position (1500, 2000)" → operation: "move", new_position: [1500, 2000]
-- "Copy X 500mm right" → operation: "copy", calculate new_position from original + 500 in X
-- "Delete X" → operation: "delete", no new_position needed
-- "Rotate X 90 degrees" → operation: "rotate", rotation: 90, keep same position
-- "Rotate X by 45" → operation: "rotate", rotation: 45
+- "Move X to position (1500, 2000)" = operation: "move", new_position: [1500, 2000]
+- "Copy X 500mm right" = operation: "copy", calculate new_position from original + 500 in X
+- "Delete X" = operation: "delete", no new_position needed
+- "Rotate X 90 degrees" = operation: "rotate", rotation: 90, keep same position
+- "Rearrange VC_FIXTURE_1, VC_FIXTURE_2, VC_FIXTURE_3 like an architect" = 
+  Generate multiple move operations with intelligent positioning
 
-CRITICAL: 
-- Use EXACT fixture names from the list above
-- Include original_position (current position from DXF)
-- Include new_position (target coordinates) for move/copy
-- Include rotation angle for rotate operations
-- For relative movements (left/right/up/down), calculate from original_position
+CRITICAL FOR REARRANGEMENT:
+- The user selected these specific fixtures (listed in "Selected fixtures:" line)
+- YOU MUST create a move operation for EVERY fixture name in that comma-separated list
+- Count the fixture names in "Selected fixtures:" and generate EXACTLY that many operations
+- Look up each fixture's current position from the "Available fixtures" list above
+- Calculate non-overlapping positions for ALL selected fixtures
+- Use operation: "move" for each fixture in the selection
+- Space fixtures appropriately (min 500-800mm between centers)
+- Create aesthetic layouts (grid, row, cluster, etc.)
+
+STEP-BY-STEP PROCESS:
+1. Find the line starting with "Selected fixtures:"
+2. Split by comma to get individual fixture names: ["EURO_CENTRE_3", "STANDING_TABLE_1", "STANDING_TABLE_2", "EURO_CENTRE_4"]
+3. For EACH fixture name in that list:
+   a. Find it in the "Available fixtures" list above to get current position
+   b. Calculate a new non-overlapping position
+   c. Add a move operation to the output JSON
+4. Your output MUST have exactly as many operations as fixtures in the "Selected fixtures:" line
+
+EXAMPLE:
+If user says: "Selected fixtures: FIXTURE_A, FIXTURE_B, FIXTURE_C, FIXTURE_D\n\nRearrange these fixtures like an architect"
+YOU MUST OUTPUT 4 operations (one for each):
+{{
+  "fixtures": [
+    {{"block_name": "FIXTURE_A", "operation": "move", "original_position": [x1, y1], "new_position": [new_x1, new_y1]}},
+    {{"block_name": "FIXTURE_B", "operation": "move", "original_position": [x2, y2], "new_position": [new_x2, new_y2]}},
+    {{"block_name": "FIXTURE_C", "operation": "move", "original_position": [x3, y3], "new_position": [new_x3, new_y3]}},
+    {{"block_name": "FIXTURE_D", "operation": "move", "original_position": [x4, y4], "new_position": [new_x4, new_y4]}}
+  ]
+}}
 
 Generate ONLY valid JSON without any markdown formatting or explanations.
 """
         
         # Call Gemini AI
         print(f"🤖 Calling Gemini AI...")
+        print(f"📝 Sending prompt (first 500 chars): {ai_prompt[:500]}...")
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel('gemini-2.0-flash-exp')
         
         response = model.generate_content(ai_prompt)
         response_text = response.text.strip()
+        
+        print(f"📥 Gemini raw response: {response_text[:500]}...")
         
         # Clean response (remove markdown code blocks)
         if '```json' in response_text:
@@ -809,6 +867,10 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
             }), 400
         
         print(f"✅ AI parsed {len(modifications.get('fixtures', []))} operations")
+        
+        # Debug: Show what fixtures were parsed
+        for fix in modifications.get('fixtures', []):
+            print(f"   • {fix.get('operation', 'move').upper()}: {fix.get('block_name', 'UNKNOWN')} → {fix.get('new_position', 'N/A')}")
         
         # Apply modifications (move, copy, delete)
         output_path = apply_ai_modifications(

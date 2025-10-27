@@ -77,7 +77,7 @@
 
             <!-- AI Prompt Section -->
             <div class="prompt-section">
-                <h3>🤖 AI-Generated Movement Prompt </h3>
+                <h3>🤖 AI-Prompt </h3>
                 <div class="prompt-display">
                     <textarea id="movement-prompt" rows="6" placeholder="Move fixtures on the canvas... prompts will appear here automatically. You can edit them before generating."></textarea>
                     <div class="prompt-actions">
@@ -122,6 +122,7 @@
         let editor;
         let currentSessionId = null;
         let movementPrompts = [];  // Store all movement prompts
+        let selectedFixtures = [];  // Track selected fixtures for AI rearrangement
 
         // Handle file upload
         document.getElementById('dxf-upload').addEventListener('change', async function(e) {
@@ -297,10 +298,16 @@
 
         function clearPrompts() {
             movementPrompts = [];
+            selectedFixtures = [];  // Clear selected fixtures too
             updatePromptDisplay();
             document.getElementById('generate-btn').disabled = true;
             document.getElementById('download-btn').disabled = true;
             showStatus('🗑️ Prompts cleared', 'info');
+            
+            // Clear selection visuals on canvas
+            if (editor) {
+                editor.clearSelections();
+            }
         }
 
         async function generateWithAI() {
@@ -351,8 +358,57 @@
             }
         }
 
-        // Make addMovementPrompt available globally for canvas-editor.js
+        // Make functions available globally for canvas-editor.js
         window.addMovementPrompt = addMovementPrompt;
+        
+        // Function to handle fixture click selection
+        window.onFixtureClicked = function(fixtureName, position) {
+            // Check if already selected
+            const existingIndex = selectedFixtures.findIndex(f => f.name === fixtureName);
+            
+            if (existingIndex >= 0) {
+                // Deselect if already selected
+                selectedFixtures.splice(existingIndex, 1);
+                showStatus(`❌ Deselected ${fixtureName}`, 'info');
+            } else {
+                // Add to selection
+                selectedFixtures.push({
+                    name: fixtureName,
+                    position: position
+                });
+                showStatus(`✅ Selected ${fixtureName}`, 'info');
+            }
+            
+            // Update prompt display with selected fixtures
+            updatePromptWithSelection();
+        };
+        
+        function updatePromptWithSelection() {
+            const promptArea = document.getElementById('movement-prompt');
+            
+            if (selectedFixtures.length === 0) {
+                // No fixtures selected, show movement prompts or placeholder
+                updatePromptDisplay();
+                return;
+            }
+            
+            // Show selected fixtures in prompt
+            const fixtureList = selectedFixtures.map(f => f.name).join(', ');
+            
+            let promptText = `Selected fixtures: ${fixtureList}\n\n`;
+            promptText += `You can now give commands like:\n`;
+            promptText += `- "Rearrange these fixtures like an architect"\n`;
+            promptText += `- "Organize these fixtures in a grid layout"\n`;
+            promptText += `- "Space these fixtures 500mm apart"\n`;
+            promptText += `- "Align these fixtures horizontally"\n`;
+            promptText += `- "Move these fixtures to the left wall"\n\n`;
+            promptText += `Edit this text to give your own instructions...`;
+            
+            promptArea.value = promptText;
+            
+            // Enable generate button
+            document.getElementById('generate-btn').disabled = false;
+        }
     </script>
 </body>
 </html>

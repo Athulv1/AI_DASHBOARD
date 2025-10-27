@@ -24,9 +24,11 @@ class CanvasEditor {
         
         // Interaction state
         this.selectedFixture = null;
+        this.selectedFixtures = [];  // For multi-select
         this.isDragging = false;
         this.dragStartPos = null;
         this.dragStartCanvasPos = null;
+        this.mouseDownTime = 0;  // Track click vs drag
         
         // View transform
         this.scale = 1;
@@ -50,11 +52,14 @@ class CanvasEditor {
     }
     
     setupEventListeners() {
-        // Mouse events for dragging
+        // Mouse events for dragging and selection
         this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this.canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
         this.canvas.addEventListener('mouseleave', this.onMouseUp.bind(this));
+        
+        // Click event for fixture selection (with Ctrl key for multi-select)
+        this.canvas.addEventListener('click', this.onCanvasClick.bind(this));
         
         // Mouse wheel for zooming
         this.canvas.addEventListener('wheel', this.onWheel.bind(this));
@@ -204,6 +209,7 @@ class CanvasEditor {
     drawFixture(fixture) {
         const [x, y] = fixture.position;
         const isSelected = this.selectedFixture === fixture;
+        const isMultiSelected = this.selectedFixtures.some(f => f.name === fixture.name);
         
         // Use actual fixture size (or default if not available)
         const width = fixture.width || 300;
@@ -279,9 +285,13 @@ class CanvasEditor {
         let fillColor = baseColor;
         let strokeColor = this.darkenColor(baseColor, 20);
         
+        // Highlight for dragging or multi-selection
         if (isSelected) {
-            fillColor = '#fbbf24';  // Yellow when selected
+            fillColor = '#fbbf24';  // Yellow when dragging
             strokeColor = '#d97706';  // Dark yellow
+        } else if (isMultiSelected) {
+            fillColor = '#60a5fa';  // Blue when selected for AI rearrangement
+            strokeColor = '#2563eb';  // Dark blue
         }
         
         // If block entity geometry exists, draw it to reproduce the exact block
@@ -468,6 +478,10 @@ class CanvasEditor {
         const canvasX = e.clientX - rect.left;
         const canvasY = e.clientY - rect.top;
         
+        // Track mouse down time to detect clicks vs drags
+        this.mouseDownTime = Date.now();
+        this.mouseDownPos = [canvasX, canvasY];
+        
         // Transform to world coordinates (Y-axis is flipped with negative scale)
         const worldX = (canvasX - this.offsetX) / this.scale;
         const worldY = -(canvasY - this.offsetY) / this.scale;
@@ -571,6 +585,68 @@ class CanvasEditor {
         //     endPos,
         //     [dx, dy]
         // );
+    }
+    
+    onCanvasClick(e) {
+        // Only process as click if mouse hasn't moved much and was quick
+        const timeSinceDown = Date.now() - this.mouseDownTime;
+        if (timeSinceDown > 300) return; // Was a drag, not a click
+        
+        const rect = this.canvas.getBoundingClientRect();
+        const canvasX = e.clientX - rect.left;
+        const canvasY = e.clientY - rect.top;
+        
+        // Check if mouse moved significantly (more than 5px = drag)
+        if (this.mouseDownPos) {
+            const dx = canvasX - this.mouseDownPos[0];
+            const dy = canvasY - this.mouseDownPos[1];
+            const distance = Math.sqrt(dx*dx + dy*dy);
+            if (distance > 5) return; // Was a drag
+        }
+        
+        // Transform to world coordinates
+        const worldX = (canvasX - this.offsetX) / this.scale;
+        const worldY = -(canvasY - this.offsetY) / this.scale;
+        
+        // Check if clicked on a fixture
+        const fixture = this.getFixtureAt(worldX, worldY);
+        
+        if (!fixture) {
+            // Clicked empty space - clear selection if not using Ctrl
+            if (!e.ctrlKey && !e.metaKey) {
+                this.selectedFixtures = [];
+                this.render();
+                if (typeof window.onFixtureClicked === 'function') {
+                    // Update prompt to show no selection
+                    window.onFixtureClicked(null, null);
+                }
+            }
+            return;
+        }
+        
+        // Ctrl/Cmd key for multi-select
+        if (e.ctrlKey || e.metaKey) {
+            // Toggle selection
+            const index = this.selectedFixtures.findIndex(f => f.name === fixture.name);
+            if (index >= 0) {
+                // Deselect
+                this.selectedFixtures.splice(index, 1);
+            } else {
+                // Add to selection
+                this.selectedFixtures.push(fixture);
+            }
+        } else {
+            // Single select (replace selection)
+            this.selectedFixtures = [fixture];
+        }
+        
+        // Notify parent page
+        if (typeof window.onFixtureClicked === 'function') {
+            window.onFixtureClicked(fixture.name, fixture.position);
+        }
+        
+        // Redraw to show selection highlights
+        this.render();
     }
     
     onWheel(e) {
@@ -705,6 +781,11 @@ class CanvasEditor {
     }
     
     // View Controls
+    
+    clearSelections() {
+        this.selectedFixtures = [];
+        this.render();
+    }
     
     zoomIn() {
         const centerX = this.canvas.width / 2;

@@ -1,0 +1,285 @@
+{
+  "dxf_version": "AC1032",
+  "encoding": "cp1252",
+  "layers": [
+    {
+      "name": "0",
+      "color": 7,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "Defpoints",
+      "color": 7,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "IM-ANNO-HATCH",
+      "color": 8,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "Text Format",
+      "color": 7,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "TV",
+      "color": 3,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "curtain",
+      "color": 144,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "Glass-FrontGlazing",
+      "color": 150,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LN-ELEVATION-4",
+      "color": 145,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LN-ELEVATION-1",
+      "color": 81,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LN-ELEVATION-3",
+      "color": 125,
+      "linetype": "a_p6_plan_L18$0$HIDDEN"
+    },
+    {
+      "name": "LN-DIMENSION",
+      "color": 252,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LN-ELEVATION-5",
+      "color": 167,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "text",
+      "color": 7,
+      "linetype": "AUSGEZOGEN"
+    },
+    {
+      "name": "LN-HATCH",
+      "color": 251,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "Floor-Unit",
+      "color": 1,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LENS_GLASS",
+      "color": 4,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LENS_HATCH",
+      "color": 251,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LENS_FURNITURE",
+      "color": 13,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LENS_PARTITION",
+      "color": 21,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LN-ELEVATION-2",
+      "color": 103,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LENS_TEXT",
+      "color": 31,
+      "linetype": "HIDDEN2"
+    },
+    {
+      "name": "LENS_CURTAIN",
+      "color": 5,
+      "linetype": "a_p6_plan_L18$0$HIDDEN"
+    },
+    {
+      "name": "wall hatch",
+      "color": 22,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "Mirror",
+      "color": 4,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LN-TEXT",
+      "color": 255,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "HIDDEN LINE",
+      "color": 177,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "dimensions",
+      "color": 149,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "glass",
+      "color": 172,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "door",
+      "color": 36,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "Steps",
+      "color": 4,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "Column hatch",
+      "color": 8,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "Column",
+      "color": 243,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "LK-FLUTTED FINISH",
+      "color": 20,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "GLASS FACADE",
+      "color": 4,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "A-WALL-MASY",
+      "color": 1,
+      "linetype": "Continuous"
+    },
+    {
+      "name": "Screen",
+      "color": 1,
+      "linetype": "Continuous"
+    }
+  ],
+  "blocks": {
+    "_ArchTick": {
+      "entity_count": 1
+    },
+    "_Oblique": {
+      "entity_count": 1
+    },
+    "Chair": {
+      "entity_count": 6
+    },
+    "GFCHGFD": {
+      "entity_count": 10
+    },
+    "12MM VC PLAN": {
+      "entity_count": 31
+    },
+    "rtf": {
+      "entity_count": 8
+    },
+    "dsg": {
+      "entity_count": 5
+    },
+    "blu zero rack details": {
+      "entity_count": 3
+    },
+    "DGHRTGUJTW": {
+      "entity_count": 17
+    },
+    "DFGHTHRTWE": {
+      "entity_count": 27
+    },
+    "1010MM VC PLAN": {
+      "entity_count": 28
+    },
+    "dfbdfhq": {
+      "entity_count": 14
+    },
+    "ffgd": {
+      "entity_count": 77
+    },
+    "GHMHHGD": {
+      "entity_count": 8
+    },
+    "49inch": {
+      "entity_count": 19
+    },
+    "serrgea": {
+      "entity_count": 101
+    },
+    "chr": {
+      "entity_count": 103
+    },
+    "servgewrgtrs": {
+      "entity_count": 13
+    },
+    "D-Table-1200": {
+      "entity_count": 29
+    },
+    "R-Table-1200": {
+      "entity_count": 5
+    },
+    "POS1500": {
+      "entity_count": 346
+    },
+    "A$Cf47e29e2": {
+      "entity_count": 142
+    },
+    "CLINIC - MOP CLOSET": {
+      "entity_count": 14
+    },
+    "CLINIC - CABINET SINK": {
+      "entity_count": 10
+    },
+    "G-Door": {
+      "entity_count": 25
+    },
+    "A$C22e4fd2c": {
+      "entity_count": 20
+    },
+    "door": {
+      "entity_count": 26
+    },
+    "awefqwf": {
+      "entity_count": 82
+    }
+  },
+  "modelspace": {
+    "HATCH": 8,
+    "INSERT": 59,
+    "MTEXT": 61,
+    "LWPOLYLINE": 74,
+    "MULTILEADER": 8,
+    "LINE": 1,
+    "CIRCLE": 1,
+    "ARC": 1,
+    "DIMENSION": 103,
+    "ARC_DIMENSION": 1
+  },
+  "total_entities": 317
+}

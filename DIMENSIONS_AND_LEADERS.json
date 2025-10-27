@@ -1,0 +1,4932 @@
+{
+  "dimensions": [
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1382.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          8146.886302400323,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          6764.886302400322,
+          -858541.734917247,
+          0.0
+        ],
+        "defpoint3": [
+          8146.886302400323,
+          -858777.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D109",
+        "handle": "57F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          7455.886302400323,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 719.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          8865.886302400322,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          8146.886302400323,
+          -858777.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          8865.886302400322,
+          -858670.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D110",
+        "handle": "58F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          8506.386302400322,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1200.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          10065.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          8865.886302400322,
+          -858670.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          10065.88630240032,
+          -858670.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D111",
+        "handle": "59F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          9465.886302400322,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 300.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          10365.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          10065.88630240032,
+          -858670.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          10365.88630240032,
+          -858670.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D112",
+        "handle": "5AF",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          10215.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1200.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          11565.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          10365.88630240032,
+          -858670.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          11565.88630240032,
+          -858670.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D113",
+        "handle": "5BF",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          10965.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1200.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          12765.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          11565.88630240032,
+          -858670.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          12765.88630240032,
+          -858670.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D114",
+        "handle": "5CF",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          12165.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 691.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          13475.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          12784.88630240032,
+          -858671.5549321924,
+          0.0
+        ],
+        "defpoint3": [
+          13475.88630240032,
+          -858649.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D115",
+        "handle": "5DF",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          13130.38630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1010.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          14485.88630239939,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          13475.88630239939,
+          -858649.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          14485.88630239939,
+          -858649.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D116",
+        "handle": "5EF",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          13980.88630239939,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 600.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          15085.88630239939,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          14485.88630239939,
+          -858649.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          15085.88630239939,
+          -858649.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D117",
+        "handle": "5FF",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          14785.88630239939,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1009.999999996274,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16095.8863023938,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          15085.88630239753,
+          -858649.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          16095.8863023938,
+          -858649.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D118",
+        "handle": "60F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          15590.88630239566,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 264.0000000037253,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16359.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          16095.8863023966,
+          -858649.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          16359.88630240032,
+          -858649.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D119",
+        "handle": "61F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          16227.88630239846,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1191.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          17550.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          16359.88630240032,
+          -858649.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          17550.88630240032,
+          -858649.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D120",
+        "handle": "62F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          16955.38630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 789.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          18339.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          17550.88630240032,
+          -858649.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          18339.88630240032,
+          -858593.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D121",
+        "handle": "63F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          17945.38630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1597.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19936.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          18339.88630240032,
+          -858593.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          19936.88630240032,
+          -858593.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D122",
+        "handle": "64F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19138.38630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 100.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          20036.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          19936.88630240032,
+          -858593.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          20036.88630240032,
+          -858593.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D42",
+        "handle": "65F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          20080.14005410564,
+          -858068.615460557,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1093.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21129.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          20036.88630240032,
+          -858593.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          21129.88630240032,
+          -858806.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D123",
+        "handle": "66E",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          20583.38630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 507.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21636.88630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "defpoint2": [
+          21129.88630240032,
+          -858806.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          21636.88630240032,
+          -858806.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D124",
+        "handle": "67E",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21383.38630240032,
+          -858179.4612995748,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 2613.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21962.34576094891,
+          -861206.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          21129.88630240032,
+          -858593.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          21636.88630240777,
+          -861206.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D125",
+        "handle": "68E",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21962.34576094866,
+          -859899.5549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 100.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21962.34576094892,
+          -861306.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          21636.88630240777,
+          -861206.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          21636.88630240032,
+          -861306.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D43",
+        "handle": "69E",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          22154.88327800188,
+          -861138.2936770768,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 2440.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21962.34576094892,
+          -863746.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          21636.88630240032,
+          -861306.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          21583.88630240032,
+          -863746.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D44",
+        "handle": "6AD",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21962.34576094867,
+          -862526.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 100.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21962.34576094892,
+          -863846.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          21583.88630240032,
+          -863746.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          21583.88630240777,
+          -863846.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D45",
+        "handle": "6BB",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          22154.88327800188,
+          -863678.2936770767,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1460.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21962.34576094892,
+          -865306.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          21583.88630240777,
+          -863846.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          21583.88630240032,
+          -865306.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D46",
+        "handle": "6CA",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21962.34576094867,
+          -864576.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 100.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21962.34576094892,
+          -865406.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          21583.88630240032,
+          -865306.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          21583.88630240032,
+          -865406.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D47",
+        "handle": "6D8",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          22154.88327800188,
+          -865238.2936770768,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1716.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21962.34576094892,
+          -867122.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          21583.88630240032,
+          -865406.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          21583.88630240777,
+          -867122.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D48",
+        "handle": "6E7",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21962.34576094867,
+          -866264.0549321926,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1259.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          8158.886302400322,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          6899.886302400322,
+          -864779.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          8158.886302400322,
+          -864779.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D126",
+        "handle": "6F5",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          7529.386302400323,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 300.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          9338.886302400322,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          9038.886302400322,
+          -864588.0549321928,
+          0.0
+        ],
+        "defpoint3": [
+          9338.886302400322,
+          -864588.0549321928,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D127",
+        "handle": "705",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          9188.886302400322,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 900.0000000037253,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          10238.88630240319,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          9338.886302399464,
+          -864588.0549321928,
+          0.0
+        ],
+        "defpoint3": [
+          10238.88630240319,
+          -864588.0549321928,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D128",
+        "handle": "715",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          9788.886302401326,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 900.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          11138.88630240118,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          10238.88630240118,
+          -864588.0549321928,
+          0.0
+        ],
+        "defpoint3": [
+          11138.88630240118,
+          -864588.0549321928,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D129",
+        "handle": "725",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          10688.88630240118,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 299.9999999962747,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          11438.88630239745,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          11138.88630240118,
+          -864588.0549321928,
+          0.0
+        ],
+        "defpoint3": [
+          11438.88630239745,
+          -864588.0549321928,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D130",
+        "handle": "735",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          11288.88630239932,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 900.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          12338.88630239946,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          11438.88630239946,
+          -864588.0549321928,
+          0.0
+        ],
+        "defpoint3": [
+          12338.88630239946,
+          -864588.0549321928,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D131",
+        "handle": "745",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          11888.88630239946,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 900.0000000037253,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          13238.88630240404,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          12338.88630240032,
+          -864588.0549321928,
+          0.0
+        ],
+        "defpoint3": [
+          13238.88630240404,
+          -864588.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D49",
+        "handle": "755",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          12788.88630240218,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 299.9999999962747,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          13538.88630240032,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          13238.88630240404,
+          -864588.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          13538.88630240032,
+          -864588.0549321928,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D50",
+        "handle": "765",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          13388.88630240218,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 900.0000000037253,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          14438.88630240319,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          13538.88630239946,
+          -864588.0549321928,
+          0.0
+        ],
+        "defpoint3": [
+          14438.88630240319,
+          -864582.2262896555,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D51",
+        "handle": "775",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          13988.88630240132,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 900.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          15338.88630240118,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          14438.88630240118,
+          -864582.2262896555,
+          0.0
+        ],
+        "defpoint3": [
+          15338.88630240118,
+          -864588.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D52",
+        "handle": "785",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          14888.88630240118,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 449.9999999962747,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          15788.88630239745,
+          -865215.7996174146,
+          0.0
+        ],
+        "defpoint2": [
+          15338.88630240118,
+          -864588.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          15788.88630239745,
+          -864588.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D53",
+        "handle": "795",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          15563.88630239932,
+          -865215.7996174146,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1650.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          17438.88630240032,
+          -865581.5700790617,
+          0.0
+        ],
+        "defpoint2": [
+          15788.88630240032,
+          -865255.7996174142,
+          0.0
+        ],
+        "defpoint3": [
+          17438.88630240032,
+          -865274.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D54",
+        "handle": "7A5",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          16613.88630240032,
+          -865581.5700790617,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 936.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          17298.23635088648,
+          -864338.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          17438.88630240032,
+          -865274.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          17438.88630241895,
+          -864338.0549321926,
+          6.8915425e-09
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D55",
+        "handle": "7B5",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          17298.23635088623,
+          -864806.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 839.0823615296977,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16613.88630241854,
+          -864434.9725706918,
+          6.8915425e-09
+        ],
+        "defpoint4": [
+          17352.82853257988,
+          -864037.4507600771,
+          6.8915425e-09
+        ],
+        "dimstyle": "Working",
+        "dimtype": 132,
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D56",
+        "handle": "7C5",
+        "layer": "dimensions",
+        "leader_length": 0.0,
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          17173.23735022149,
+          -864134.0637415356,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 4
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 3163.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          18420.88630240032,
+          -867509.2759048133,
+          0.0
+        ],
+        "defpoint2": [
+          21583.88630240032,
+          -867122.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          18420.88630240032,
+          -867122.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D57",
+        "handle": "7D1",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          20002.38630240032,
+          -867509.2759048133,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1527.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16893.88630240032,
+          -867509.2759048133,
+          0.0
+        ],
+        "defpoint2": [
+          18420.88630240032,
+          -867122.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          16893.88630240032,
+          -867139.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D58",
+        "handle": "7E1",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          17657.38630240032,
+          -867509.2759048133,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 846.9999999962746,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19089.88630240405,
+          -860132.7495484706,
+          0.0
+        ],
+        "defpoint2": [
+          19936.88630240032,
+          -860011.137386393,
+          0.0
+        ],
+        "defpoint3": [
+          19089.88630240405,
+          -859961.1373863932,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D29",
+        "handle": "7F1",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19513.38630240218,
+          -860132.7495484706,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 750.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          18339.88630240405,
+          -860132.7495484706,
+          0.0
+        ],
+        "defpoint2": [
+          19089.88630240405,
+          -859961.1373863932,
+          0.0
+        ],
+        "defpoint3": [
+          18339.88630240405,
+          -859961.1373863932,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D30",
+        "handle": "7FF",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          18714.88630240405,
+          -860132.7495484706,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 100.0000000037253,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          18239.88630240032,
+          -860132.7495484706,
+          0.0
+        ],
+        "defpoint2": [
+          18339.88630240405,
+          -859849.0549321923,
+          0.0
+        ],
+        "defpoint3": [
+          18239.88630240032,
+          -859955.0549321923,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D31",
+        "handle": "80D",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          18407.64755751814,
+          -860325.2870655238,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1769.717741645872,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          8669.604044046193,
+          -863366.5018444888,
+          0.0
+        ],
+        "defpoint2": [
+          6899.886302400322,
+          -862826.60231929,
+          0.0
+        ],
+        "defpoint3": [
+          8669.604044046193,
+          -862888.5731226343,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D59",
+        "handle": "81C",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          7784.745173223258,
+          -863366.5018444888,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1175.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          9844.604044046197,
+          -863366.5018444888,
+          0.0
+        ],
+        "defpoint2": [
+          8669.604044046193,
+          -862888.5731226343,
+          0.0
+        ],
+        "defpoint3": [
+          9844.604044046197,
+          -862888.5731226343,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D60",
+        "handle": "82C",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          9257.104044046195,
+          -863366.5018444888,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1212.5,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          11057.10404404619,
+          -863366.5018444888,
+          0.0
+        ],
+        "defpoint2": [
+          9844.604044046197,
+          -862888.5731226343,
+          0.0
+        ],
+        "defpoint3": [
+          11057.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D61",
+        "handle": "83C",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          10450.85404404619,
+          -863366.5018444888,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1200.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          12257.10404404619,
+          -863366.5018444888,
+          0.0
+        ],
+        "defpoint2": [
+          11057.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          12257.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D32",
+        "handle": "84C",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          11657.10404404619,
+          -863366.5018444888,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1200.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          13457.10404404619,
+          -863366.5018444888,
+          0.0
+        ],
+        "defpoint2": [
+          12257.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          13457.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D33",
+        "handle": "85A",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          12857.10404404619,
+          -863366.5018444888,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1200.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          14657.10404404619,
+          -863366.5018444888,
+          0.0
+        ],
+        "defpoint2": [
+          13457.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          14657.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D34",
+        "handle": "868",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          14057.10404404619,
+          -863366.5018444888,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1589.782258372754,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16246.88630241895,
+          -863366.5018444888,
+          0.0
+        ],
+        "defpoint2": [
+          14657.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          16246.88630241895,
+          -862843.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D62",
+        "handle": "876",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          15451.99517323257,
+          -863366.5018444888,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 600.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16846.88630241895,
+          -863366.5018444888,
+          0.0
+        ],
+        "defpoint2": [
+          16246.88630241895,
+          -862843.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          16846.88630241895,
+          -862843.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D63",
+        "handle": "886",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          16546.88630241895,
+          -863366.5018444888,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1524.999999981373,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          18371.88630240032,
+          -862907.3996854172,
+          0.0
+        ],
+        "defpoint2": [
+          16846.88630241895,
+          -862843.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          18371.88630240032,
+          -862276.5549321877,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D64",
+        "handle": "896",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          17609.38630240963,
+          -862907.3996854172,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 740.0000000037253,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19111.88630240405,
+          -862907.3996854172,
+          0.0
+        ],
+        "defpoint2": [
+          18371.88630240032,
+          -862276.5549321877,
+          0.0
+        ],
+        "defpoint3": [
+          19111.88630240405,
+          -862276.5549321877,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D35",
+        "handle": "8A6",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          18741.88630240218,
+          -862907.3996854172,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1429.481809558347,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          10142.70110201011,
+          -862908.5731226348,
+          0.0
+        ],
+        "defpoint2": [
+          10092.61489104027,
+          -864338.0549321927,
+          0.0
+        ],
+        "defpoint3": [
+          9684.604044045453,
+          -862908.5731226346,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D65",
+        "handle": "8B4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          10142.70110200987,
+          -863623.3140274137,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1040.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          10142.70110201085,
+          -861868.5731226348,
+          0.0
+        ],
+        "defpoint2": [
+          9684.604044046197,
+          -862908.5731226346,
+          0.0
+        ],
+        "defpoint3": [
+          9684.604044046197,
+          -861868.5731226344,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D66",
+        "handle": "8C4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          10142.70110201061,
+          -862388.5731226346,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1040.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          10142.70110201085,
+          -860828.5731226349,
+          0.0
+        ],
+        "defpoint2": [
+          9684.604044046197,
+          -861868.5731226344,
+          0.0
+        ],
+        "defpoint3": [
+          9684.604044046197,
+          -860828.5731226343,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D67",
+        "handle": "8D4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          10142.70110201061,
+          -861348.5731226346,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 450.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          10142.70110201085,
+          -860378.5731226349,
+          0.0
+        ],
+        "defpoint2": [
+          9684.604044046197,
+          -860828.5731226343,
+          0.0
+        ],
+        "defpoint3": [
+          9857.104044046195,
+          -860378.5731226343,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D68",
+        "handle": "8E4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          10142.70110201061,
+          -860603.5731226347,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1458.518190441886,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          10142.70110201085,
+          -858920.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          9857.104044046195,
+          -860378.5731226343,
+          0.0
+        ],
+        "defpoint3": [
+          9920.432611443044,
+          -858920.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D69",
+        "handle": "8F4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          10142.70110201061,
+          -859649.3140274137,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1205.000000000232,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          12561.79063098767,
+          -863133.0549321928,
+          0.0
+        ],
+        "defpoint2": [
+          12486.6458018496,
+          -864338.0549321927,
+          0.0
+        ],
+        "defpoint3": [
+          12257.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D70",
+        "handle": "904",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          12561.79063098743,
+          -863735.5549321929,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 450.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          12561.79063098873,
+          -862683.0549321928,
+          0.0
+        ],
+        "defpoint2": [
+          12257.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          12257.10404404619,
+          -862683.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D71",
+        "handle": "914",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          12561.79063098848,
+          -862908.0549321926,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1040.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          12561.79063098873,
+          -861643.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          12257.10404404619,
+          -862683.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          12084.60404404619,
+          -861643.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D72",
+        "handle": "924",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          12561.79063098848,
+          -862163.0549321926,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1040.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          12561.79063098873,
+          -860603.0549321928,
+          0.0
+        ],
+        "defpoint2": [
+          12084.60404404619,
+          -861643.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          12257.10404404619,
+          -860603.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D73",
+        "handle": "934",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          12561.79063098848,
+          -861123.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 450.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          12561.79063098873,
+          -860153.0549321928,
+          0.0
+        ],
+        "defpoint2": [
+          12257.10404404619,
+          -860603.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          12257.10404404619,
+          -860153.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D74",
+        "handle": "944",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          12561.79063098848,
+          -860378.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1233.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          12561.79063098873,
+          -858920.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          12257.10404404619,
+          -860153.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          12434.58242938289,
+          -858920.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D75",
+        "handle": "954",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          12561.79063098848,
+          -859536.5549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1254.000000000233,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          14961.21572348833,
+          -860153.0549321932,
+          0.0
+        ],
+        "defpoint2": [
+          14597.5604423731,
+          -858899.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          14657.10404404619,
+          -860153.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D76",
+        "handle": "964",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          14961.21572348809,
+          -859526.0549321928,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 450.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          14961.21572348843,
+          -860603.0549321928,
+          0.0
+        ],
+        "defpoint2": [
+          14657.10404404619,
+          -860153.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          14484.60404404619,
+          -860603.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D77",
+        "handle": "974",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          14961.21572348819,
+          -860378.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 2080.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          14961.21572348843,
+          -862683.0549321928,
+          0.0
+        ],
+        "defpoint2": [
+          14484.60404404619,
+          -860603.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          14484.60404404619,
+          -862683.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D78",
+        "handle": "984",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          14961.21572348819,
+          -861643.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 450.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          14961.21572348843,
+          -863133.0549321928,
+          0.0
+        ],
+        "defpoint2": [
+          14484.60404404619,
+          -862683.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          14657.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D79",
+        "handle": "994",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          14961.21572348819,
+          -862908.0549321926,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1205.000000000232,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          14961.21572348843,
+          -864338.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          14657.10404404619,
+          -863133.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          14473.88630240032,
+          -864338.0549321927,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D80",
+        "handle": "9A4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          14961.21572348819,
+          -863735.5549321929,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 653.3045846202876,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16055.99345523487,
+          -862843.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          16584.20100583875,
+          -863496.3595168128,
+          6.8915425e-09
+        ],
+        "defpoint3": [
+          16584.20100583875,
+          -862843.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D81",
+        "handle": "9B4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          16055.99345523462,
+          -863169.7072245028,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1200.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16055.99345523595,
+          -861643.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          16584.20100583982,
+          -862843.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          16246.88630242002,
+          -861643.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D82",
+        "handle": "9C4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          16055.9934552357,
+          -862243.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1200.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16055.99345523487,
+          -860443.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          16246.88630241895,
+          -861643.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          16246.88630241895,
+          -860443.0549321923,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D83",
+        "handle": "9D4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          16055.99345523462,
+          -861043.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1538.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16055.99345523487,
+          -858905.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          16246.88630241895,
+          -860443.0549321923,
+          0.0
+        ],
+        "defpoint3": [
+          16359.88630240032,
+          -858905.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D84",
+        "handle": "9E4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          16055.99345523462,
+          -859674.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1700.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          17488.88630240032,
+          -864253.7777792579,
+          0.0
+        ],
+        "defpoint2": [
+          15788.88630240032,
+          -864588.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          17488.88630240032,
+          -864588.054932288,
+          6.8915425e-09
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D85",
+        "handle": "9F4",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          16638.88630240032,
+          -864253.7777792579,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 50.00000000745058,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          17538.88630240777,
+          -864253.7777792579,
+          0.0
+        ],
+        "defpoint2": [
+          17488.88630240032,
+          -864588.054932288,
+          6.8915425e-09
+        ],
+        "defpoint3": [
+          17538.88630240777,
+          -864338.0549321926,
+          6.8915425e-09
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D86",
+        "handle": "A04",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          17607.14005410937,
+          -864142.9319402401,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 660.0000000149012,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          18198.88630242251,
+          -864253.7777792579,
+          0.0
+        ],
+        "defpoint2": [
+          17538.88630240761,
+          -864338.0549321926,
+          6.8915425e-09
+        ],
+        "defpoint3": [
+          18198.88630242251,
+          -864375.0549321926,
+          1.3783085e-08
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D87",
+        "handle": "A15",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          17868.88630241506,
+          -864253.7777792579,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 49.99999998882413,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          18248.8863024115,
+          -864253.7777792579,
+          0.0
+        ],
+        "defpoint2": [
+          18198.88630242267,
+          -864375.0549321926,
+          1.3783085e-08
+        ],
+        "defpoint3": [
+          18248.8863024115,
+          -864355.0549321926,
+          6.8915425e-09
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D88",
+        "handle": "A25",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          18317.1400541224,
+          -864142.9319402401,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1582.00000000745,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          20001.88630240032,
+          -863422.6481190413,
+          0.0
+        ],
+        "defpoint2": [
+          21583.88630240777,
+          -863689.0549321906,
+          0.0
+        ],
+        "defpoint3": [
+          20001.88630240032,
+          -863602.7429726368,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D36",
+        "handle": "A36",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          20792.88630240405,
+          -863422.6481190413,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 395.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19224.90624899041,
+          -862276.5549321882,
+          0.0
+        ],
+        "defpoint2": [
+          19111.88630240405,
+          -862671.5549321877,
+          0.0
+        ],
+        "defpoint3": [
+          19111.88630240405,
+          -862276.5549321877,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D37",
+        "handle": "A44",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19224.90624899016,
+          -862474.0549321881,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1499.999999996275,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19224.90624899041,
+          -860776.554932192,
+          0.0
+        ],
+        "defpoint2": [
+          19111.88630240405,
+          -862276.5549321877,
+          0.0
+        ],
+        "defpoint3": [
+          19107.88630240032,
+          -860776.5549321916,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D38",
+        "handle": "A52",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19224.90624899016,
+          -861526.5549321899,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 770.4999999990686,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19224.90624899041,
+          -860006.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          19107.88630240032,
+          -860776.5549321916,
+          0.0
+        ],
+        "defpoint3": [
+          19089.88630240405,
+          -860006.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D39",
+        "handle": "A60",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19224.90624899016,
+          -860391.3049321922,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 4515.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          6420.42522462825,
+          -863292.0549321928,
+          0.0
+        ],
+        "defpoint2": [
+          6899.886302400322,
+          -858777.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          6899.886302400322,
+          -863292.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D89",
+        "handle": "A6E",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          6420.425224628002,
+          -861034.5549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1201.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          6420.42522462825,
+          -864493.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          6899.886302400322,
+          -863292.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          6899.886302400322,
+          -864493.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D90",
+        "handle": "A7E",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          6420.425224628002,
+          -863892.5549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 286.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          6420.42522462825,
+          -864779.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          6899.886302400322,
+          -864493.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          6899.886302400322,
+          -864779.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D91",
+        "handle": "A8E",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          6420.425224628002,
+          -864636.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 498.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21366.45603674273,
+          -863248.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          21583.88630240032,
+          -863746.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          21583.88630240032,
+          -863248.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D92",
+        "handle": "A9E",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21366.45603674248,
+          -863497.0549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 449.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21366.45603674273,
+          -862799.0549321928,
+          0.0
+        ],
+        "defpoint2": [
+          21583.88630240032,
+          -863248.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          21636.88630240032,
+          -862799.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D93",
+        "handle": "AAE",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21366.45603674248,
+          -863023.5549321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1650.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21384.45603674274,
+          -861149.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          21636.88630240032,
+          -862799.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          21618.88630240032,
+          -861149.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D94",
+        "handle": "ABE",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21384.45603674248,
+          -861974.0549321926,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 200.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          21436.88630240032,
+          -862692.6576942304,
+          0.0
+        ],
+        "defpoint2": [
+          21636.88630240032,
+          -862799.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          21436.88630240032,
+          -862799.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D95",
+        "handle": "ACE",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21536.88630240032,
+          -862692.6576942304,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1199.999999996275,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          20436.88630240405,
+          -860600.0418401367,
+          0.0
+        ],
+        "defpoint2": [
+          21636.88630240032,
+          -860699.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          20436.88630240405,
+          -860708.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D40",
+        "handle": "ADE",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          21036.88630240219,
+          -860600.0418401367,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 250.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          20186.88630240405,
+          -860600.0418401367,
+          0.0
+        ],
+        "defpoint2": [
+          20436.88630240405,
+          -860708.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          20186.88630240405,
+          -860717.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D41",
+        "handle": "AEC",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          20311.88630240405,
+          -860600.0418401367,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 2313.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19270.88630240032,
+          -865491.0900876387,
+          0.0
+        ],
+        "defpoint2": [
+          21583.88630240032,
+          -865356.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          19270.88630240032,
+          -865306.0549321924,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D96",
+        "handle": "C7A",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          20427.38630240032,
+          -865491.0900876387,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 968.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19101.7429795004,
+          -864338.054932193,
+          0.0
+        ],
+        "defpoint2": [
+          19270.88630240032,
+          -865306.0549321924,
+          0.0
+        ],
+        "defpoint3": [
+          19270.88630240032,
+          -864338.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D97",
+        "handle": "C8A",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19101.74297950015,
+          -864822.0549321926,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 812.8894143627258,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19672.08070116176,
+          -863647.3374846319,
+          0.0
+        ],
+        "defpoint2": [
+          19158.88630240032,
+          -864291.6630132042,
+          0.0
+        ],
+        "defpoint3": [
+          19761.46494616189,
+          -863746.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dimtype": 1,
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D98",
+        "handle": "CCB",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19370.79137928097,
+          -863920.1415251378,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 1
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1413.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          18434.88119240473,
+          -860006.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          18339.88630240032,
+          -858593.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          18339.8863023966,
+          -860006.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D99",
+        "handle": "CDB",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          18434.88119240449,
+          -859299.5549321926,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "glass",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 946.9999999962746,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19089.88630240405,
+          -859812.1603498249,
+          0.0
+        ],
+        "defpoint2": [
+          20036.88630240032,
+          -859956.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          19089.88630240405,
+          -859956.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D100",
+        "handle": "CEB",
+        "layer": "glass",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19563.38630240218,
+          -859812.1603498249,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 744.9175457996316,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19745.48820647593,
+          -860011.1373863935,
+          0.0
+        ],
+        "defpoint2": [
+          19901.88630240032,
+          -860756.0549321927,
+          0.0
+        ],
+        "defpoint3": [
+          19936.88630240032,
+          -860011.137386393,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D101",
+        "handle": "CFC",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19745.48820647568,
+          -860383.5961592931,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1413.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          20297.9248587526,
+          -860006.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          20136.88630240032,
+          -858593.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          20136.88630240032,
+          -860006.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D102",
+        "handle": "D0C",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          20297.92485875235,
+          -859299.5549321926,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1690.000000000233,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          20240.30048723142,
+          -862996.0549321932,
+          0.0
+        ],
+        "defpoint2": [
+          20001.88630240032,
+          -861306.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          20001.88630240032,
+          -862996.0549321927,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D103",
+        "handle": "D1C",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          20240.30048723117,
+          -862151.0549321929,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1635.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          20001.88630240032,
+          -861431.8639388306,
+          0.0
+        ],
+        "defpoint2": [
+          21636.88630240032,
+          -861306.0549321926,
+          0.0
+        ],
+        "defpoint3": [
+          20001.88630240032,
+          -861306.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D104",
+        "handle": "D2C",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          20819.38630240032,
+          -861431.8639388306,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 230.5,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          8001.727897610464,
+          -864548.0549321929,
+          0.0
+        ],
+        "defpoint2": [
+          8148.886302400322,
+          -864778.5549321926,
+          0.0
+        ],
+        "defpoint3": [
+          8163.886302404048,
+          -864548.0549321926,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D105",
+        "handle": "D3C",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          8001.727897610217,
+          -864663.3049321927,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "glass",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 2624.543466106107,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          16925.71682929254,
+          -863814.651968693,
+          0.0
+        ],
+        "defpoint2": [
+          17538.88630241895,
+          -864272.9519493311,
+          6.8915425e-09
+        ],
+        "defpoint3": [
+          15688.88630240032,
+          -864272.9519494321,
+          6.8915425e-09
+        ],
+        "defpoint4": [
+          16613.88630241895,
+          -864434.9725706918,
+          6.8915425e-09
+        ],
+        "dimstyle": "Working",
+        "dimtype": 5,
+        "dxftype": "ARC_DIMENSION",
+        "end_angle": 2.968194240817265,
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D106",
+        "handle": "D4C",
+        "has_leader": 0,
+        "is_partial": 0,
+        "layer": "glass",
+        "leader_point1": [
+          17538.88630241895,
+          -864272.9519493311,
+          6.8915425e-09
+        ],
+        "leader_point2": [
+          15688.88630240032,
+          -864272.9519494321,
+          6.8915425e-09
+        ],
+        "ltscale": 50.0,
+        "owner": "2",
+        "start_angle": 0.1733984128817698,
+        "text_midpoint": [
+          16613.88630238097,
+          -863740.6844988118,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 5
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 750.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          18420.88630240032,
+          -864585.2988022049,
+          0.0
+        ],
+        "defpoint2": [
+          19170.88630240032,
+          -865086.2863661352,
+          0.0
+        ],
+        "defpoint3": [
+          18420.88630240032,
+          -865047.5684776691,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D107",
+        "handle": "D5E",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          18795.88630240032,
+          -864585.2988022049,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "LENS_HATCH",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 700.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          19811.88630240032,
+          -862907.3996854172,
+          0.0
+        ],
+        "defpoint2": [
+          19111.88630240032,
+          -862671.5549321877,
+          0.0
+        ],
+        "defpoint3": [
+          19811.88630240032,
+          -862676.0549321927,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D108",
+        "handle": "D72",
+        "layer": "LENS_HATCH",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          19461.88630240032,
+          -862907.3996854172,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    },
+    {
+      "dxf_type": "DIMENSION",
+      "layer": "dimensions",
+      "color": 3,
+      "dxf_attribs": {
+        "actual_measurement": 1382.0,
+        "angle": 90.0,
+        "attachment_point": 5,
+        "color": 3,
+        "defpoint": [
+          6517.957485879029,
+          -858541.7349172476,
+          0.0
+        ],
+        "defpoint2": [
+          6754.886302400322,
+          -859923.734917247,
+          0.0
+        ],
+        "defpoint3": [
+          6764.886302400322,
+          -858541.734917247,
+          0.0
+        ],
+        "dimstyle": "Working",
+        "dxftype": "DIMENSION",
+        "flip_arrow_1": 0,
+        "flip_arrow_2": 0,
+        "geometry": "*D132",
+        "handle": "D9F",
+        "layer": "dimensions",
+        "ltscale": 50.0,
+        "owner": "2",
+        "text_midpoint": [
+          6517.957485878785,
+          -859232.7349172473,
+          0.0
+        ],
+        "true_color": 1439241,
+        "unknown1": 0,
+        "version": 0
+      },
+      "dim_type": 0
+    }
+  ],
+  "multileaders": [
+    {
+      "dxf_type": "MULTILEADER",
+      "layer": "LENS_TEXT",
+      "color": 256,
+      "dxf_attribs": {
+        "arrow_head_size": 50.0,
+        "block_color": -1056964608,
+        "block_connection_type": 0,
+        "block_rotation": 0.0,
+        "block_scale_vector": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "content_type": 2,
+        "dogleg_length": 0.36,
+        "dxftype": "MULTILEADER",
+        "handle": "1C6",
+        "has_dogleg": 1,
+        "has_landing": 1,
+        "has_text_frame": 0,
+        "is_annotative": 0,
+        "is_text_direction_negative": 0,
+        "layer": "LENS_TEXT",
+        "leader_extend_to_text": 0,
+        "leader_line_color": -1073741824,
+        "leader_linetype_handle": "2F",
+        "leader_lineweight": -1,
+        "leader_type": 2,
+        "linetype": "Continuous",
+        "ltscale": 3.0,
+        "owner": "2",
+        "property_override_flags": 67453952,
+        "scale": 1.0,
+        "style_handle": "1C7",
+        "text_IPE_align": 1,
+        "text_alignment_type": 0,
+        "text_angle_type": 1,
+        "text_attachment_direction": 0,
+        "text_attachment_point": 3,
+        "text_bottom_attachment_type": 9,
+        "text_color": -1023410175,
+        "text_left_attachment_type": 1,
+        "text_right_attachment_type": 1,
+        "text_style_handle": "2B",
+        "text_top_attachment_type": 9,
+        "version": 2
+      }
+    },
+    {
+      "dxf_type": "MULTILEADER",
+      "layer": "LENS_TEXT",
+      "color": 256,
+      "dxf_attribs": {
+        "arrow_head_size": 50.0,
+        "block_color": -1056964608,
+        "block_connection_type": 0,
+        "block_rotation": 0.0,
+        "block_scale_vector": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "content_type": 2,
+        "dogleg_length": 0.36,
+        "dxftype": "MULTILEADER",
+        "handle": "1C8",
+        "has_dogleg": 1,
+        "has_landing": 1,
+        "has_text_frame": 0,
+        "is_annotative": 0,
+        "is_text_direction_negative": 0,
+        "layer": "LENS_TEXT",
+        "leader_extend_to_text": 0,
+        "leader_line_color": -1073741824,
+        "leader_linetype_handle": "2F",
+        "leader_lineweight": -1,
+        "leader_type": 2,
+        "linetype": "Continuous",
+        "ltscale": 3.0,
+        "owner": "2",
+        "property_override_flags": 67453952,
+        "scale": 1.0,
+        "style_handle": "1C7",
+        "text_IPE_align": 1,
+        "text_alignment_type": 0,
+        "text_angle_type": 1,
+        "text_attachment_direction": 0,
+        "text_attachment_point": 3,
+        "text_bottom_attachment_type": 9,
+        "text_color": -1023410175,
+        "text_left_attachment_type": 1,
+        "text_right_attachment_type": 1,
+        "text_style_handle": "2B",
+        "text_top_attachment_type": 9,
+        "version": 2
+      }
+    },
+    {
+      "dxf_type": "MULTILEADER",
+      "layer": "LENS_TEXT",
+      "color": 256,
+      "dxf_attribs": {
+        "arrow_head_size": 50.0,
+        "block_color": -1056964608,
+        "block_connection_type": 0,
+        "block_rotation": 0.0,
+        "block_scale_vector": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "content_type": 2,
+        "dogleg_length": 0.36,
+        "dxftype": "MULTILEADER",
+        "handle": "20F",
+        "has_dogleg": 1,
+        "has_landing": 1,
+        "has_text_frame": 0,
+        "is_annotative": 0,
+        "is_text_direction_negative": 0,
+        "layer": "LENS_TEXT",
+        "leader_extend_to_text": 0,
+        "leader_line_color": -1073741824,
+        "leader_linetype_handle": "2F",
+        "leader_lineweight": -1,
+        "leader_type": 2,
+        "linetype": "Continuous",
+        "ltscale": 3.0,
+        "owner": "2",
+        "property_override_flags": 67453952,
+        "scale": 1.0,
+        "style_handle": "1C7",
+        "text_IPE_align": 1,
+        "text_alignment_type": 0,
+        "text_angle_type": 1,
+        "text_attachment_direction": 0,
+        "text_attachment_point": 1,
+        "text_bottom_attachment_type": 9,
+        "text_color": -1023410175,
+        "text_left_attachment_type": 1,
+        "text_right_attachment_type": 1,
+        "text_style_handle": "2B",
+        "text_top_attachment_type": 9,
+        "version": 2
+      }
+    },
+    {
+      "dxf_type": "MULTILEADER",
+      "layer": "LENS_TEXT",
+      "color": 256,
+      "dxf_attribs": {
+        "arrow_head_size": 50.0,
+        "block_color": -1056964608,
+        "block_connection_type": 0,
+        "block_rotation": 0.0,
+        "block_scale_vector": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "content_type": 2,
+        "dogleg_length": 0.36,
+        "dxftype": "MULTILEADER",
+        "handle": "414",
+        "has_dogleg": 1,
+        "has_landing": 1,
+        "has_text_frame": 0,
+        "is_annotative": 0,
+        "is_text_direction_negative": 0,
+        "layer": "LENS_TEXT",
+        "leader_extend_to_text": 0,
+        "leader_line_color": -1073741824,
+        "leader_linetype_handle": "2F",
+        "leader_lineweight": -1,
+        "leader_type": 2,
+        "linetype": "Continuous",
+        "ltscale": 3.0,
+        "owner": "2",
+        "property_override_flags": 67453952,
+        "scale": 1.0,
+        "style_handle": "1C7",
+        "text_IPE_align": 1,
+        "text_alignment_type": 0,
+        "text_angle_type": 1,
+        "text_attachment_direction": 0,
+        "text_attachment_point": 3,
+        "text_bottom_attachment_type": 9,
+        "text_color": -1023410175,
+        "text_left_attachment_type": 1,
+        "text_right_attachment_type": 1,
+        "text_style_handle": "2B",
+        "text_top_attachment_type": 9,
+        "version": 2
+      }
+    },
+    {
+      "dxf_type": "MULTILEADER",
+      "layer": "LENS_TEXT",
+      "color": 256,
+      "dxf_attribs": {
+        "arrow_head_size": 50.0,
+        "block_color": -1056964608,
+        "block_connection_type": 0,
+        "block_rotation": 0.0,
+        "block_scale_vector": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "content_type": 2,
+        "dogleg_length": 0.36,
+        "dxftype": "MULTILEADER",
+        "handle": "415",
+        "has_dogleg": 1,
+        "has_landing": 1,
+        "has_text_frame": 0,
+        "is_annotative": 0,
+        "is_text_direction_negative": 0,
+        "layer": "LENS_TEXT",
+        "leader_extend_to_text": 0,
+        "leader_line_color": -1073741824,
+        "leader_linetype_handle": "2F",
+        "leader_lineweight": -1,
+        "leader_type": 2,
+        "linetype": "Continuous",
+        "ltscale": 3.0,
+        "owner": "2",
+        "property_override_flags": 67453952,
+        "scale": 1.0,
+        "style_handle": "1C7",
+        "text_IPE_align": 3,
+        "text_alignment_type": 0,
+        "text_angle_type": 1,
+        "text_attachment_direction": 0,
+        "text_attachment_point": 1,
+        "text_bottom_attachment_type": 9,
+        "text_color": -1023410175,
+        "text_left_attachment_type": 1,
+        "text_right_attachment_type": 1,
+        "text_style_handle": "2B",
+        "text_top_attachment_type": 9,
+        "version": 2
+      }
+    },
+    {
+      "dxf_type": "MULTILEADER",
+      "layer": "LENS_TEXT",
+      "color": 256,
+      "dxf_attribs": {
+        "arrow_head_size": 50.0,
+        "block_color": -1056964608,
+        "block_connection_type": 0,
+        "block_rotation": 0.0,
+        "block_scale_vector": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "content_type": 2,
+        "dogleg_length": 0.36,
+        "dxftype": "MULTILEADER",
+        "handle": "457",
+        "has_dogleg": 1,
+        "has_landing": 1,
+        "has_text_frame": 0,
+        "is_annotative": 0,
+        "is_text_direction_negative": 0,
+        "layer": "LENS_TEXT",
+        "leader_extend_to_text": 0,
+        "leader_line_color": -1073741824,
+        "leader_linetype_handle": "2F",
+        "leader_lineweight": -1,
+        "leader_type": 2,
+        "linetype": "Continuous",
+        "ltscale": 3.0,
+        "owner": "2",
+        "property_override_flags": 67453952,
+        "scale": 1.0,
+        "style_handle": "1C7",
+        "text_IPE_align": 3,
+        "text_alignment_type": 0,
+        "text_angle_type": 1,
+        "text_attachment_direction": 0,
+        "text_attachment_point": 3,
+        "text_bottom_attachment_type": 9,
+        "text_color": -1023410175,
+        "text_left_attachment_type": 1,
+        "text_right_attachment_type": 1,
+        "text_style_handle": "2B",
+        "text_top_attachment_type": 9,
+        "version": 2
+      }
+    },
+    {
+      "dxf_type": "MULTILEADER",
+      "layer": "LENS_TEXT",
+      "color": 256,
+      "dxf_attribs": {
+        "arrow_head_size": 50.0,
+        "block_color": -1056964608,
+        "block_connection_type": 0,
+        "block_rotation": 0.0,
+        "block_scale_vector": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "content_type": 2,
+        "dogleg_length": 0.36,
+        "dxftype": "MULTILEADER",
+        "handle": "47B",
+        "has_dogleg": 1,
+        "has_landing": 1,
+        "has_text_frame": 0,
+        "is_annotative": 0,
+        "is_text_direction_negative": 0,
+        "layer": "LENS_TEXT",
+        "leader_extend_to_text": 0,
+        "leader_line_color": -1073741824,
+        "leader_linetype_handle": "2F",
+        "leader_lineweight": -1,
+        "leader_type": 2,
+        "linetype": "Continuous",
+        "ltscale": 3.0,
+        "owner": "2",
+        "property_override_flags": 67453952,
+        "scale": 1.0,
+        "style_handle": "1C7",
+        "text_IPE_align": 3,
+        "text_alignment_type": 0,
+        "text_angle_type": 1,
+        "text_attachment_direction": 0,
+        "text_attachment_point": 1,
+        "text_bottom_attachment_type": 9,
+        "text_color": -1023410175,
+        "text_left_attachment_type": 1,
+        "text_right_attachment_type": 1,
+        "text_style_handle": "2B",
+        "text_top_attachment_type": 9,
+        "version": 2
+      }
+    },
+    {
+      "dxf_type": "MULTILEADER",
+      "layer": "LENS_TEXT",
+      "color": 256,
+      "dxf_attribs": {
+        "arrow_head_size": 50.0,
+        "block_color": -1056964608,
+        "block_connection_type": 0,
+        "block_rotation": 0.0,
+        "block_scale_vector": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "content_type": 2,
+        "dogleg_length": 0.36,
+        "dxftype": "MULTILEADER",
+        "handle": "D92",
+        "has_dogleg": 1,
+        "has_landing": 1,
+        "has_text_frame": 0,
+        "is_annotative": 0,
+        "is_text_direction_negative": 0,
+        "layer": "LENS_TEXT",
+        "leader_extend_to_text": 0,
+        "leader_line_color": -1073741824,
+        "leader_linetype_handle": "2F",
+        "leader_lineweight": -1,
+        "leader_type": 2,
+        "linetype": "Continuous",
+        "ltscale": 3.0,
+        "owner": "2",
+        "property_override_flags": 67453952,
+        "scale": 1.0,
+        "style_handle": "1C7",
+        "text_IPE_align": 0,
+        "text_alignment_type": 0,
+        "text_angle_type": 1,
+        "text_attachment_direction": 0,
+        "text_attachment_point": 1,
+        "text_bottom_attachment_type": 9,
+        "text_color": -1023410175,
+        "text_left_attachment_type": 1,
+        "text_right_attachment_type": 1,
+        "text_style_handle": "2B",
+        "text_top_attachment_type": 9,
+        "version": 2
+      }
+    }
+  ]
+}
