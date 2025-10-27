@@ -302,8 +302,11 @@
         }
 
         async function generateWithAI() {
-            if (movementPrompts.length === 0) {
-                showStatus('❌ No movements to generate', 'error');
+            // Get the edited prompt from textarea
+            const userPrompt = document.getElementById('movement-prompt').value.trim();
+            
+            if (!userPrompt || userPrompt === 'Move fixtures on the canvas... prompts will appear here automatically. You can edit them before generating.') {
+                showStatus('❌ Please enter a command or move fixtures first', 'error');
                 return;
             }
 
@@ -311,9 +314,6 @@
             document.getElementById('ai-status').innerHTML = '<div class="loading">🤖 Calling Gemini AI...</div>';
 
             try {
-                // Create combined prompt for all movements
-                const combinedPrompt = movementPrompts.map(p => p.description).join('. ');
-                
                 const response = await fetch('/generate_with_ai', {
                     method: 'POST',
                     headers: {
@@ -321,25 +321,24 @@
                     },
                     body: JSON.stringify({
                         session_id: currentSessionId,
-                        movements: movementPrompts,
-                        prompt: combinedPrompt
+                        prompt: userPrompt  // Send the user's edited prompt
                     })
                 });
 
                 const data = await response.json();
 
-                if (data.error) {
-                    throw new Error(data.error);
+                if (data.error || !data.success) {
+                    throw new Error(data.error || 'AI generation failed');
                 }
 
                 hideLoading();
                 document.getElementById('ai-status').innerHTML = 
-                    `<div class="success">✅ AI generated ${data.fixtures_modified} modifications</div>`;
+                    `<div class="success">${data.message}</div>`;
                 
                 // Enable download button
                 document.getElementById('download-btn').disabled = false;
                 
-                showStatus('✅ AI processing complete! You can now download the modified DXF.', 'success');
+                showStatus(`✅ ${data.message}`, 'success');
 
             } catch (error) {
                 console.error('AI generation error:', error);

@@ -689,21 +689,12 @@ def update_json_with_modification(session_id, modification):
 @app.route('/generate_with_ai', methods=['POST'])
 def generate_with_ai():
     """
-    Process multiple fixture movements with Gemini AI (Prompt-Based Model)
+    Process user-edited prompt with Gemini AI (supports move, copy, delete operations)
     
     Expects JSON:
     {
         "session_id": "...",
-        "movements": [
-            {
-                "fixture": "name",
-                "start": [x, y],
-                "end": [x, y],
-                "delta": [dx, dy],
-                "description": "Move ... right 500mm"
-            }
-        ],
-        "prompt": "Combined prompt text"
+        "prompt": "User's edited prompt text (e.g., 'Copy VC_FIXTURE_1 to position 1500, 2000')"
     }
     """
     try:
@@ -713,25 +704,60 @@ def generate_with_ai():
         if session_id not in session_storage:
             return jsonify({'error': 'Invalid session'}), 400
         
-        movements = data.get('movements', [])
-        combined_prompt = data.get('prompt', '')
+        user_prompt = data.get('prompt', '').strip()
         
-        if not movements:
-            return jsonify({'error': 'No movements provided'}), 400
+        if not user_prompt:
+            return jsonify({'error': 'No prompt provided'}), 400
         
         print(f"\n🤖 AI Generation Request:")
         print(f"   Session: {session_id}")
-        print(f"   Movements: {len(movements)}")
-        print(f"   Prompt: {combined_prompt}")
+        print(f"   User Prompt: {user_prompt}")
         
-        # Get DXF path from session
+        # Get DXF path and JSON data from session
         original_dxf = session_storage[session_id]['original_dxf']
+        json_data = session_storage[session_id]['json_data']
         
-        # Load fixtures from DXF for AI prompt
-        fixtures = get_fixtures_from_dxf(original_dxf)
+        # Get all fixtures from the current DXF
+        all_fixtures = []
+        for entity in json_data.get('modelspace', []):
+            if entity.get('dxf_type') == 'INSERT':
+                all_fixtures.append({
+                    'name': entity['name'],
+                    'position': entity['insert'][:2],
+                    'rotation': entity.get('rotation', 0),
+                    'layer': entity.get('layer', '0')
+                })
         
-        # Create AI prompt using prompt-based model logic
-        ai_prompt = create_ai_prompt_from_movements(fixtures, movements, combined_prompt)
+        # Create comprehensive AI prompt that understands MOVE, COPY, DELETE
+        ai_prompt = f"""You are a DXF fixture modification assistant. Parse the user's command and generate the appropriate JSON modifications.
+
+Available fixtures in the DXF file:
+{json.dumps([f['name'] for f in all_fixtures[:20]], indent=2)}
+(showing first 20 fixtures)
+
+User's Command:
+{user_prompt}
+
+Instructions:
+1. Understand commands: MOVE, COPY, DELETE
+2. For MOVE: Change fixture position to new coordinates
+3. For COPY: Create a new fixture at the specified position (add "_COPY" suffix to name)
+4. For DELETE: Remove the fixture from modelspace
+
+Output JSON format:
+{{
+  "fixtures": [
+    {{
+      "block_name": "FIXTURE_NAME",
+      "operation": "move|copy|delete",
+      "original_position": [x, y],
+      "new_position": [x, y]  // Only for move/copy, omit for delete
+    }}
+  ]
+}}
+
+Generate ONLY valid JSON without any markdown formatting or explanations.
+"""
         
         # Call Gemini AI
         print(f"🤖 Calling Gemini AI...")
@@ -742,12 +768,11 @@ def generate_with_ai():
         response = model.generate_content(ai_prompt)
         response_text = response.text.strip()
         
-        # Clean response
-        if response_text.startswith('```'):
-            lines = response_text.split('\n')
-            response_text = '\n'.join(lines[1:-1])
-        if response_text.startswith('```json'):
-            response_text = response_text[7:]
+        # Clean response (remove markdown code blocks)
+        if '```json' in response_text:
+            response_text = response_text.split('```json')[1].split('```')[0].strip()
+        elif '```' in response_text:
+            response_text = response_text.split('```')[1].split('```')[0].strip()
         
         # Parse modifications
         modifications = json.loads(response_text)
@@ -758,30 +783,46 @@ def generate_with_ai():
                 'error': modifications['error']
             }), 400
         
-        print(f"✅ AI generated {len(modifications.get('fixtures', []))} modifications")
+        print(f"✅ AI parsed {len(modifications.get('fixtures', []))} operations")
         
-        # Apply modifications using prompt-based model method
-        output_path, changes = apply_modifications_prompt_based(
-            original_dxf,
-            modifications,
-            session_id
+        # Apply modifications (move, copy, delete)
+        output_path = apply_ai_modifications(
+        # Apply modifications (move, copy, delete)
+        output_path = apply_ai_modifications(
+            session_id,
+            modifications
         )
         
         # Store output path in session
         session_storage[session_id]['ai_output_path'] = output_path
         session_storage[session_id]['ai_modifications'] = modifications
         
+        # Count operations
+        operations_count = {
+            'moved': 0,
+            'copied': 0,
+            'deleted': 0
+        }
+        for fixture in modifications.get('fixtures', []):
+            op = fixture.get('operation', 'move').lower()
+            if op == 'move':
+                operations_count['moved'] += 1
+            elif op == 'copy':
+                operations_count['copied'] += 1
+            elif op == 'delete':
+                operations_count['deleted'] += 1
+        
         return jsonify({
             'success': True,
-            'fixtures_modified': len(modifications.get('fixtures', [])),
-            'changes': changes
+            'message': f"✅ Processed: {operations_count['moved']} moved, {operations_count['copied']} copied, {operations_count['deleted']} deleted",
+            'operations': operations_count
         })
     
     except json.JSONDecodeError as e:
         print(f"❌ AI response is not valid JSON: {e}")
         return jsonify({
             'success': False,
-            'error': 'AI response is not valid JSON'
+            'error': 'AI could not parse your command. Please be more specific.'
         }), 400
     except Exception as e:
         print(f"❌ AI generation error: {e}")
@@ -790,28 +831,81 @@ def generate_with_ai():
         return jsonify({'error': str(e)}), 500
 
 
-def get_fixtures_from_dxf(dxf_path):
-    """Extract all fixtures from DXF file"""
-    try:
-        doc = ezdxf.readfile(dxf_path)
-        msp = doc.modelspace()
+def apply_ai_modifications(session_id, modifications):
+    """
+    Apply AI-generated modifications (MOVE, COPY, DELETE) to the JSON data
+    Returns path to the modified DXF file
+    """
+    json_data = session_storage[session_id]['json_data']
+    original_dxf = session_storage[session_id]['original_dxf']
+    filename = session_storage[session_id]['filename']
+    
+    modelspace = json_data.get('modelspace', [])
+    
+    for mod in modifications.get('fixtures', []):
+        block_name = mod['block_name']
+        operation = mod.get('operation', 'move').lower()
+        orig_pos = mod.get('original_position')
+        new_pos = mod.get('new_position')
         
-        fixtures = []
-        for entity in msp:
-            if entity.dxftype() == 'INSERT':
-                pos = entity.dxf.insert
-                fixtures.append({
-                    'name': entity.dxf.name,
-                    'x': float(pos.x),
-                    'y': float(pos.y),
-                    'z': float(pos.z),
-                    'rotation': float(entity.dxf.rotation) if hasattr(entity.dxf, 'rotation') else 0.0
-                })
+        print(f"   📍 {operation.upper()}: {block_name}")
         
-        return fixtures
-    except Exception as e:
-        print(f"❌ Error extracting fixtures: {e}")
-        return []
+        if operation == 'delete':
+            # Remove fixture from modelspace
+            json_data['modelspace'] = [
+                e for e in modelspace 
+                if not (e.get('dxf_type') == 'INSERT' and e.get('name') == block_name)
+            ]
+            print(f"      ✅ Deleted {block_name}")
+            
+        elif operation == 'copy':
+            # Find original fixture
+            original_entity = None
+            for entity in modelspace:
+                if entity.get('dxf_type') == 'INSERT' and entity.get('name') == block_name:
+                    if orig_pos:
+                        current_pos = entity['insert'][:2]
+                        if abs(current_pos[0] - orig_pos[0]) < 0.1 and abs(current_pos[1] - orig_pos[1]) < 0.1:
+                            original_entity = entity
+                            break
+                    else:
+                        original_entity = entity
+                        break
+            
+            if original_entity and new_pos:
+                # Create a copy with new position
+                copied_entity = original_entity.copy()
+                copied_entity['insert'] = [new_pos[0], new_pos[1], original_entity['insert'][2]]
+                # Note: Name stays the same, AutoCAD allows multiple instances
+                json_data['modelspace'].append(copied_entity)
+                print(f"      ✅ Copied {block_name} to ({new_pos[0]:.1f}, {new_pos[1]:.1f})")
+            
+        elif operation == 'move':
+            # Update position
+            for entity in modelspace:
+                if entity.get('dxf_type') == 'INSERT' and entity.get('name') == block_name:
+                    if orig_pos:
+                        current_pos = entity['insert'][:2]
+                        if abs(current_pos[0] - orig_pos[0]) < 0.1 and abs(current_pos[1] - orig_pos[1]) < 0.1:
+                            entity['insert'] = [new_pos[0], new_pos[1], entity['insert'][2]]
+                            print(f"      ✅ Moved {block_name} to ({new_pos[0]:.1f}, {new_pos[1]:.1f})")
+                            break
+                    else:
+                        # Move first instance if no position specified
+                        entity['insert'] = [new_pos[0], new_pos[1], entity['insert'][2]]
+                        print(f"      ✅ Moved {block_name} to ({new_pos[0]:.1f}, {new_pos[1]:.1f})")
+                        break
+    
+    # Generate output DXF
+    base_name = os.path.splitext(filename)[0]
+    output_filename = f"{base_name}-AI-MODIFIED.dxf"
+    output_path = os.path.join(app.config['OUTPUT_FOLDER'], f"{session_id}_{output_filename}")
+    
+    # Convert JSON back to DXF
+    json_to_dxf(json_data, output_path)
+    
+    print(f"✅ Generated: {output_filename}")
+    return output_path
 
 
 def create_ai_prompt_from_movements(fixtures, movements, user_prompt):
