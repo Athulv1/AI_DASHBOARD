@@ -787,11 +787,16 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
         
         # Apply modifications (move, copy, delete)
         output_path = apply_ai_modifications(
-        # Apply modifications (move, copy, delete)
-        output_path = apply_ai_modifications(
             session_id,
             modifications
         )
+        
+        # Check if modifications were actually applied
+        if not output_path:
+            return jsonify({
+                'success': False,
+                'error': 'No changes were made. Please check fixture names and try again.'
+            }), 400
         
         # Store output path in session
         session_storage[session_id]['ai_output_path'] = output_path
@@ -833,14 +838,34 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
 
 def apply_ai_modifications(session_id, modifications):
     """
-    Apply AI-generated modifications (MOVE, COPY, DELETE) to the JSON data
+    Apply AI-generated modifications (MOVE, COPY, DELETE) directly to the DXF file
+    Uses the same method as prompt-based model - modifies original DXF, doesn't recreate from JSON
     Returns path to the modified DXF file
     """
-    json_data = session_storage[session_id]['json_data']
     original_dxf = session_storage[session_id]['original_dxf']
     filename = session_storage[session_id]['filename']
     
-    modelspace = json_data.get('modelspace', [])
+    # Load the ORIGINAL DXF file (preserves format and version)
+    print(f"📖 Loading original DXF: {original_dxf}")
+    doc = ezdxf.readfile(original_dxf)
+    msp = doc.modelspace()
+    
+    # Build a lookup of all INSERT entities by block name and position
+    insert_entities = {}
+    for entity in msp:
+        if entity.dxftype() == 'INSERT':
+            block_name = entity.dxf.name
+            pos = entity.dxf.insert
+            pos_key = f"{block_name}@{pos.x:.2f},{pos.y:.2f}"
+            if block_name not in insert_entities:
+                insert_entities[block_name] = []
+            insert_entities[block_name].append({
+                'entity': entity,
+                'pos_key': pos_key,
+                'pos': (pos.x, pos.y)
+            })
+    
+    changes_made = 0
     
     for mod in modifications.get('fixtures', []):
         block_name = mod['block_name']
@@ -851,58 +876,97 @@ def apply_ai_modifications(session_id, modifications):
         print(f"   📍 {operation.upper()}: {block_name}")
         
         if operation == 'delete':
-            # Remove fixture from modelspace
-            json_data['modelspace'] = [
-                e for e in modelspace 
-                if not (e.get('dxf_type') == 'INSERT' and e.get('name') == block_name)
-            ]
-            print(f"      ✅ Deleted {block_name}")
+            # Remove fixture(s) from modelspace
+            entities_to_delete = []
+            for entity in msp:
+                if entity.dxftype() == 'INSERT' and entity.dxf.name == block_name:
+                    if orig_pos:
+                        pos = entity.dxf.insert
+                        if abs(pos.x - orig_pos[0]) < 0.1 and abs(pos.y - orig_pos[1]) < 0.1:
+                            entities_to_delete.append(entity)
+                    else:
+                        entities_to_delete.append(entity)
+            
+            for entity in entities_to_delete:
+                msp.delete_entity(entity)
+                changes_made += 1
+                print(f"      ✅ Deleted {block_name}")
             
         elif operation == 'copy':
-            # Find original fixture
-            original_entity = None
-            for entity in modelspace:
-                if entity.get('dxf_type') == 'INSERT' and entity.get('name') == block_name:
-                    if orig_pos:
-                        current_pos = entity['insert'][:2]
-                        if abs(current_pos[0] - orig_pos[0]) < 0.1 and abs(current_pos[1] - orig_pos[1]) < 0.1:
-                            original_entity = entity
+            # Find original fixture and create a copy
+            source_entity = None
+            for entity in msp:
+                if entity.dxftype() == 'INSERT' and entity.dxf.name == block_name:
+                    if orig_pos and len(orig_pos) >= 2:
+                        # Match by position if provided
+                        pos = entity.dxf.insert
+                        if abs(pos.x - orig_pos[0]) < 0.1 and abs(pos.y - orig_pos[1]) < 0.1:
+                            source_entity = entity
                             break
                     else:
-                        original_entity = entity
+                        # Use first instance if no position specified
+                        source_entity = entity
                         break
             
-            if original_entity and new_pos:
+            if source_entity and new_pos and len(new_pos) >= 2:
                 # Create a copy with new position
-                copied_entity = original_entity.copy()
-                copied_entity['insert'] = [new_pos[0], new_pos[1], original_entity['insert'][2]]
-                # Note: Name stays the same, AutoCAD allows multiple instances
-                json_data['modelspace'].append(copied_entity)
+                new_entity = msp.add_blockref(
+                    block_name,
+                    (new_pos[0], new_pos[1], source_entity.dxf.insert.z),
+                    dxfattribs={
+                        'layer': source_entity.dxf.layer,
+                        'xscale': source_entity.dxf.xscale,
+                        'yscale': source_entity.dxf.yscale,
+                        'zscale': source_entity.dxf.zscale,
+                        'rotation': source_entity.dxf.rotation,
+                    }
+                )
+                changes_made += 1
                 print(f"      ✅ Copied {block_name} to ({new_pos[0]:.1f}, {new_pos[1]:.1f})")
+            elif not source_entity:
+                print(f"      ⚠️  Source fixture not found: {block_name}")
+            elif not new_pos:
+                print(f"      ⚠️  No target position provided for {block_name}")
             
         elif operation == 'move':
-            # Update position
-            for entity in modelspace:
-                if entity.get('dxf_type') == 'INSERT' and entity.get('name') == block_name:
-                    if orig_pos:
-                        current_pos = entity['insert'][:2]
-                        if abs(current_pos[0] - orig_pos[0]) < 0.1 and abs(current_pos[1] - orig_pos[1]) < 0.1:
-                            entity['insert'] = [new_pos[0], new_pos[1], entity['insert'][2]]
+            # Update position of existing fixture
+            for entity in msp:
+                if entity.dxftype() == 'INSERT' and entity.dxf.name == block_name:
+                    if orig_pos and len(orig_pos) >= 2 and new_pos and len(new_pos) >= 2:
+                        # Match by position
+                        pos = entity.dxf.insert
+                        if abs(pos.x - orig_pos[0]) < 0.1 and abs(pos.y - orig_pos[1]) < 0.1:
+                            entity.dxf.insert = (new_pos[0], new_pos[1], pos.z)
+                            changes_made += 1
                             print(f"      ✅ Moved {block_name} to ({new_pos[0]:.1f}, {new_pos[1]:.1f})")
                             break
-                    else:
+                    elif new_pos and len(new_pos) >= 2:
                         # Move first instance if no position specified
-                        entity['insert'] = [new_pos[0], new_pos[1], entity['insert'][2]]
+                        pos = entity.dxf.insert
+                        entity.dxf.insert = (new_pos[0], new_pos[1], pos.z)
+                        changes_made += 1
                         print(f"      ✅ Moved {block_name} to ({new_pos[0]:.1f}, {new_pos[1]:.1f})")
                         break
+                    else:
+                        print(f"      ⚠️  Invalid position data for {block_name}")
+                        break
+    
+    if changes_made == 0:
+        print(f"   ⚠️  No changes made")
+        return None
+    
+    # Set R2018 + MM format (same as prompt-based model)
+    doc.header['$INSUNITS'] = 4  # Millimeters
+    doc.header['$MEASUREMENT'] = 1  # Metric
     
     # Generate output DXF
     base_name = os.path.splitext(filename)[0]
     output_filename = f"{base_name}-AI-MODIFIED.dxf"
     output_path = os.path.join(app.config['OUTPUT_FOLDER'], f"{session_id}_{output_filename}")
     
-    # Convert JSON back to DXF
-    json_to_dxf(json_data, output_path)
+    # Save (preserves original DXF version and format)
+    print(f"💾 Saving modified DXF...")
+    doc.saveas(output_path)
     
     print(f"✅ Generated: {output_filename}")
     return output_path
@@ -1048,8 +1112,8 @@ def download_dxf(session_id):
         
         print(f"\n📥 Generating DXF for download...")
         
-        # Check if AI-generated file exists
-        if 'ai_output_path' in session_data and os.path.exists(session_data['ai_output_path']):
+        # Check if AI-generated file exists and is valid
+        if 'ai_output_path' in session_data and session_data.get('ai_output_path') and os.path.exists(session_data['ai_output_path']):
             output_path = session_data['ai_output_path']
             print(f"✅ Using AI-generated DXF")
         else:
