@@ -686,36 +686,300 @@ def update_json_with_modification(session_id, modification):
                     break
 
 
+@app.route('/generate_with_ai', methods=['POST'])
+def generate_with_ai():
+    """
+    Process multiple fixture movements with Gemini AI (Prompt-Based Model)
+    
+    Expects JSON:
+    {
+        "session_id": "...",
+        "movements": [
+            {
+                "fixture": "name",
+                "start": [x, y],
+                "end": [x, y],
+                "delta": [dx, dy],
+                "description": "Move ... right 500mm"
+            }
+        ],
+        "prompt": "Combined prompt text"
+    }
+    """
+    try:
+        data = request.json
+        session_id = data.get('session_id')
+        
+        if session_id not in session_storage:
+            return jsonify({'error': 'Invalid session'}), 400
+        
+        movements = data.get('movements', [])
+        combined_prompt = data.get('prompt', '')
+        
+        if not movements:
+            return jsonify({'error': 'No movements provided'}), 400
+        
+        print(f"\n🤖 AI Generation Request:")
+        print(f"   Session: {session_id}")
+        print(f"   Movements: {len(movements)}")
+        print(f"   Prompt: {combined_prompt}")
+        
+        # Get DXF path from session
+        original_dxf = session_storage[session_id]['original_dxf']
+        
+        # Load fixtures from DXF for AI prompt
+        fixtures = get_fixtures_from_dxf(original_dxf)
+        
+        # Create AI prompt using prompt-based model logic
+        ai_prompt = create_ai_prompt_from_movements(fixtures, movements, combined_prompt)
+        
+        # Call Gemini AI
+        print(f"🤖 Calling Gemini AI...")
+        import google.generativeai as genai
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        
+        response = model.generate_content(ai_prompt)
+        response_text = response.text.strip()
+        
+        # Clean response
+        if response_text.startswith('```'):
+            lines = response_text.split('\n')
+            response_text = '\n'.join(lines[1:-1])
+        if response_text.startswith('```json'):
+            response_text = response_text[7:]
+        
+        # Parse modifications
+        modifications = json.loads(response_text)
+        
+        if 'error' in modifications:
+            return jsonify({
+                'success': False,
+                'error': modifications['error']
+            }), 400
+        
+        print(f"✅ AI generated {len(modifications.get('fixtures', []))} modifications")
+        
+        # Apply modifications using prompt-based model method
+        output_path, changes = apply_modifications_prompt_based(
+            original_dxf,
+            modifications,
+            session_id
+        )
+        
+        # Store output path in session
+        session_storage[session_id]['ai_output_path'] = output_path
+        session_storage[session_id]['ai_modifications'] = modifications
+        
+        return jsonify({
+            'success': True,
+            'fixtures_modified': len(modifications.get('fixtures', [])),
+            'changes': changes
+        })
+    
+    except json.JSONDecodeError as e:
+        print(f"❌ AI response is not valid JSON: {e}")
+        return jsonify({
+            'success': False,
+            'error': 'AI response is not valid JSON'
+        }), 400
+    except Exception as e:
+        print(f"❌ AI generation error: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
+
+
+def get_fixtures_from_dxf(dxf_path):
+    """Extract all fixtures from DXF file"""
+    try:
+        doc = ezdxf.readfile(dxf_path)
+        msp = doc.modelspace()
+        
+        fixtures = []
+        for entity in msp:
+            if entity.dxftype() == 'INSERT':
+                pos = entity.dxf.insert
+                fixtures.append({
+                    'name': entity.dxf.name,
+                    'x': float(pos.x),
+                    'y': float(pos.y),
+                    'z': float(pos.z),
+                    'rotation': float(entity.dxf.rotation) if hasattr(entity.dxf, 'rotation') else 0.0
+                })
+        
+        return fixtures
+    except Exception as e:
+        print(f"❌ Error extracting fixtures: {e}")
+        return []
+
+
+def create_ai_prompt_from_movements(fixtures, movements, user_prompt):
+    """Create Gemini AI prompt from canvas movements"""
+    
+    fixtures_json = json.dumps(fixtures, indent=2)
+    
+    # Convert movements to detailed format
+    movement_details = []
+    for m in movements:
+        movement_details.append({
+            'fixture_name': m['fixture'],
+            'from_position': m['start'],
+            'to_position': m['end'],
+            'delta': m['delta'],
+            'description': m['description']
+        })
+    
+    movements_json = json.dumps(movement_details, indent=2)
+    
+    prompt = f"""You are a DXF fixture movement assistant. The user has moved fixtures on a canvas editor.
+
+AVAILABLE FIXTURES IN DXF:
+{fixtures_json}
+
+USER MOVEMENTS:
+{movements_json}
+
+USER DESCRIPTION: "{user_prompt}"
+
+Your task is to generate precise JSON modifications for these fixture movements.
+
+RULES:
+1. Match each moved fixture by name to the AVAILABLE FIXTURES list
+2. Use the EXACT "name" field from AVAILABLE FIXTURES as "block_name"
+3. Find the fixture with matching name and closest position to "from_position"
+4. Use the exact "to_position" as the new_position
+5. Round all coordinates to 2 decimal places
+
+OUTPUT FORMAT (MUST BE VALID JSON ONLY):
+{{
+  "fixtures": [
+    {{
+      "block_name": "EXACT_FIXTURE_NAME",
+      "original_position": [X, Y],
+      "new_position": [NEW_X, NEW_Y]
+    }}
+  ]
+}}
+
+If you cannot match a fixture, output:
+{{
+  "error": "explanation of the problem"
+}}
+
+Generate ONLY the JSON, no other text."""
+    
+    return prompt
+
+
+def apply_modifications_prompt_based(dxf_path, modifications, session_id):
+    """Apply modifications to DXF using prompt-based model method (R2018 + MM)"""
+    
+    # Load original DXF
+    doc = ezdxf.readfile(dxf_path)
+    msp = doc.modelspace()
+    
+    # Create fixture mapping
+    original_fixtures = {}
+    for entity in msp:
+        if entity.dxftype() == 'INSERT':
+            name = entity.dxf.name
+            pos = (round(entity.dxf.insert.x, 2), round(entity.dxf.insert.y, 2))
+            key = f'{name}@{pos[0]},{pos[1]}'
+            
+            if key not in original_fixtures:
+                original_fixtures[key] = []
+            original_fixtures[key].append(entity)
+    
+    # Apply modifications
+    changes = []
+    for mod in modifications.get('fixtures', []):
+        block_name = mod['block_name']
+        orig_pos = mod['original_position']
+        new_pos = mod['new_position']
+        
+        orig_pos_key = (round(orig_pos[0], 2), round(orig_pos[1], 2))
+        key = f'{block_name}@{orig_pos_key[0]},{orig_pos_key[1]}'
+        
+        if key in original_fixtures and original_fixtures[key]:
+            fixture_to_update = original_fixtures[key].pop(0)
+            new_pos_vec = ezdxf.math.Vec3(new_pos)
+            old_pos = fixture_to_update.dxf.insert
+            fixture_to_update.dxf.insert = new_pos_vec
+            
+            delta_x = new_pos_vec.x - old_pos.x
+            delta_y = new_pos_vec.y - old_pos.y
+            
+            print(f'   ✅ Moved "{block_name}"')
+            print(f'      From: X={old_pos.x:.2f}, Y={old_pos.y:.2f}')
+            print(f'      To:   X={new_pos_vec.x:.2f}, Y={new_pos_vec.y:.2f}')
+            print(f'      Delta: ΔX={delta_x:.2f}mm, ΔY={delta_y:.2f}mm')
+            
+            changes.append({
+                'name': block_name,
+                'from': {'x': old_pos.x, 'y': old_pos.y},
+                'to': {'x': new_pos_vec.x, 'y': new_pos_vec.y},
+                'delta': {'x': delta_x, 'y': delta_y}
+            })
+        else:
+            print(f'   ⚠️  Fixture not found: {block_name} at {orig_pos_key}')
+    
+    # Set R2018 + MM format (same as prompt-based model)
+    doc.header['$INSUNITS'] = 4  # Millimeters
+    doc.header['$MEASUREMENT'] = 1  # Metric
+    
+    # Generate output filename
+    output_filename = f"ai_modified_{session_id}.dxf"
+    output_path = os.path.join(app.config['OUTPUT_FOLDER'], output_filename)
+    
+    # Save
+    doc.saveas(output_path)
+    print(f'💾 Saved: {output_path}')
+    
+    return output_path, changes
+
+
 @app.route('/download/<session_id>')
 def download_dxf(session_id):
     """
     Generate and download modified DXF file
+    Uses AI-generated file if available, otherwise uses JSON-based file
     """
     try:
         if session_id not in session_storage:
             return jsonify({'error': 'Invalid session'}), 400
         
         session_data = session_storage[session_id]
-        json_data = session_data['json_data']
         original_filename = session_data['filename']
         
         print(f"\n📥 Generating DXF for download...")
         
-        # Generate output filename
+        # Check if AI-generated file exists
+        if 'ai_output_path' in session_data and os.path.exists(session_data['ai_output_path']):
+            output_path = session_data['ai_output_path']
+            print(f"✅ Using AI-generated DXF")
+        else:
+            # Fallback: Generate from JSON data
+            json_data = session_data['json_data']
+            base_name = os.path.splitext(original_filename)[0]
+            output_filename = f"{base_name}-MODIFIED.dxf"
+            output_path = os.path.join(app.config['OUTPUT_FOLDER'], f"{session_id}_{output_filename}")
+            
+            # Convert JSON back to DXF
+            json_to_dxf(json_data, output_path)
+            print(f"✅ Generated from JSON")
+        
+        # Generate download filename
         base_name = os.path.splitext(original_filename)[0]
-        output_filename = f"{base_name}-MODIFIED.dxf"
-        output_path = os.path.join(app.config['OUTPUT_FOLDER'], f"{session_id}_{output_filename}")
+        download_filename = f"{base_name}-MODIFIED.dxf"
         
-        # Convert JSON back to DXF
-        json_to_dxf(json_data, output_path)
-        
-        print(f"✅ Generated: {output_filename}")
+        print(f"✅ Ready for download: {download_filename}")
         
         # Send file for download
         return send_file(
             output_path,
             as_attachment=True,
-            download_name=output_filename,
+            download_name=download_filename,
             mimetype='application/dxf'
         )
     

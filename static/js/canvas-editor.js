@@ -554,13 +554,23 @@ class CanvasEditor {
         console.log(`   To:   (${endPos[0].toFixed(2)}, ${endPos[1].toFixed(2)})`);
         console.log(`   Delta: (${dx.toFixed(2)}, ${dy.toFixed(2)})`);
         
-        // Send to backend
-        await this.updateFixturePosition(
-            this.selectedFixture.name,
-            this.dragStartPos,
-            endPos,
-            [dx, dy]
-        );
+        // Add to prompt list (if function is available from HTML)
+        if (typeof window.addMovementPrompt === 'function') {
+            window.addMovementPrompt(
+                this.selectedFixture.name,
+                this.dragStartPos,
+                endPos,
+                [dx, dy]
+            );
+        }
+        
+        // Also send to backend for real-time updates (optional - can be disabled)
+        // await this.updateFixturePosition(
+        //     this.selectedFixture.name,
+        //     this.dragStartPos,
+        //     endPos,
+        //     [dx, dy]
+        // );
     }
     
     onWheel(e) {

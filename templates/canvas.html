@@ -75,9 +75,26 @@
                 </div>
             </div>
 
+            <!-- AI Prompt Section -->
+            <div class="prompt-section">
+                <h3>🤖 AI-Generated Movement Prompt (Editable)</h3>
+                <div class="prompt-display">
+                    <textarea id="movement-prompt" rows="6" placeholder="Move fixtures on the canvas... prompts will appear here automatically. You can edit them before generating."></textarea>
+                    <div class="prompt-actions">
+                        <button class="btn btn-primary" id="generate-btn" onclick="generateWithAI()" disabled>
+                            ✨ Generate with AI
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearPrompts()">
+                            🗑️ Clear Prompts
+                        </button>
+                    </div>
+                    <div id="ai-status" class="ai-status"></div>
+                </div>
+            </div>
+
             <!-- Action Buttons -->
             <div class="actions">
-                <button class="btn btn-success" onclick="downloadDXF()">
+                <button class="btn btn-success" onclick="downloadDXF()" id="download-btn" disabled>
                     📥 Download Modified DXF
                 </button>
                 <button class="btn btn-secondary" onclick="resetCanvas()">
@@ -104,6 +121,7 @@
         // Initialize on page load
         let editor;
         let currentSessionId = null;
+        let movementPrompts = [];  // Store all movement prompts
 
         // Handle file upload
         document.getElementById('dxf-upload').addEventListener('change', async function(e) {
@@ -226,6 +244,114 @@
                 statusEl.style.display = 'none';
             }, 5000);
         }
+
+        // Add movement to prompt list
+        function addMovementPrompt(fixtureName, startPos, endPos, delta) {
+            const prompt = {
+                fixture: fixtureName,
+                start: startPos,
+                end: endPos,
+                delta: delta,
+                description: generatePromptDescription(fixtureName, delta)
+            };
+            
+            movementPrompts.push(prompt);
+            updatePromptDisplay();
+            
+            // Enable generate button
+            document.getElementById('generate-btn').disabled = false;
+        }
+
+        function generatePromptDescription(fixtureName, delta) {
+            const [dx, dy] = delta;
+            let parts = [];
+            
+            // Determine direction and distance
+            if (Math.abs(dx) > 1) {
+                const direction = dx > 0 ? 'right' : 'left';
+                parts.push(`${Math.abs(dx).toFixed(0)}mm ${direction}`);
+            }
+            
+            if (Math.abs(dy) > 1) {
+                const direction = dy > 0 ? 'up' : 'down';
+                parts.push(`${Math.abs(dy).toFixed(0)}mm ${direction}`);
+            }
+            
+            if (parts.length === 0) {
+                return `Move ${fixtureName} (no significant movement)`;
+            }
+            
+            return `Move ${fixtureName} ${parts.join(' and ')}`;
+        }
+
+        function updatePromptDisplay() {
+            const promptText = movementPrompts.map((p, i) => 
+                `${i + 1}. ${p.description}`
+            ).join('\n');
+            
+            document.getElementById('movement-prompt').value = promptText || 
+                'Move fixtures on the canvas... prompts will appear here automatically';
+        }
+
+        function clearPrompts() {
+            movementPrompts = [];
+            updatePromptDisplay();
+            document.getElementById('generate-btn').disabled = true;
+            document.getElementById('download-btn').disabled = true;
+            showStatus('🗑️ Prompts cleared', 'info');
+        }
+
+        async function generateWithAI() {
+            if (movementPrompts.length === 0) {
+                showStatus('❌ No movements to generate', 'error');
+                return;
+            }
+
+            showLoading();
+            document.getElementById('ai-status').innerHTML = '<div class="loading">🤖 Calling Gemini AI...</div>';
+
+            try {
+                // Create combined prompt for all movements
+                const combinedPrompt = movementPrompts.map(p => p.description).join('. ');
+                
+                const response = await fetch('/generate_with_ai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        session_id: currentSessionId,
+                        movements: movementPrompts,
+                        prompt: combinedPrompt
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                hideLoading();
+                document.getElementById('ai-status').innerHTML = 
+                    `<div class="success">✅ AI generated ${data.fixtures_modified} modifications</div>`;
+                
+                // Enable download button
+                document.getElementById('download-btn').disabled = false;
+                
+                showStatus('✅ AI processing complete! You can now download the modified DXF.', 'success');
+
+            } catch (error) {
+                console.error('AI generation error:', error);
+                hideLoading();
+                document.getElementById('ai-status').innerHTML = 
+                    `<div class="error">❌ Error: ${error.message}</div>`;
+                showStatus('❌ AI generation failed: ' + error.message, 'error');
+            }
+        }
+
+        // Make addMovementPrompt available globally for canvas-editor.js
+        window.addMovementPrompt = addMovementPrompt;
     </script>
 </body>
 </html>
