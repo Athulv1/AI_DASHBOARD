@@ -87,7 +87,7 @@ class CanvasEditor {
         // Auto-fit to canvas
         this.fitToCanvas();
         
-        // Initial render
+        // Render immediately (removed animation effect)
         this.render();
         
         console.log(`✅ Loaded ${this.fixtures.length} fixtures with ${this.fixtureTypes.size} types`);
@@ -210,6 +210,7 @@ class CanvasEditor {
         const [x, y] = fixture.position;
         const isSelected = this.selectedFixture === fixture;
         const isMultiSelected = this.selectedFixtures.some(f => f.name === fixture.name);
+        // Removed AI visual effects - no longer showing green pulse or badges
         
         // Use actual fixture size (or default if not available)
         const width = fixture.width || 300;
@@ -285,7 +286,7 @@ class CanvasEditor {
         let fillColor = baseColor;
         let strokeColor = this.darkenColor(baseColor, 20);
         
-        // Highlight for dragging or multi-selection
+        // Highlight for dragging or multi-selection (removed AI update highlighting)
         if (isSelected) {
             fillColor = '#fbbf24';  // Yellow when dragging
             strokeColor = '#d97706';  // Dark yellow
@@ -469,6 +470,26 @@ class CanvasEditor {
         const newB = Math.max(0, b);
         
         return `#${(newR << 16 | newG << 8 | newB).toString(16).padStart(6, '0')}`;
+    }
+    
+    blendColors(color1, color2, ratio) {
+        // Blend two hex colors with given ratio (0 = color1, 1 = color2)
+        const num1 = parseInt(color1.slice(1), 16);
+        const num2 = parseInt(color2.slice(1), 16);
+        
+        const r1 = num1 >> 16;
+        const g1 = (num1 >> 8) & 0x00FF;
+        const b1 = num1 & 0x0000FF;
+        
+        const r2 = num2 >> 16;
+        const g2 = (num2 >> 8) & 0x00FF;
+        const b2 = num2 & 0x0000FF;
+        
+        const r = Math.round(r1 * (1 - ratio) + r2 * ratio);
+        const g = Math.round(g1 * (1 - ratio) + g2 * ratio);
+        const b = Math.round(b1 * (1 - ratio) + b2 * ratio);
+        
+        return `#${(r << 16 | g << 8 | b).toString(16).padStart(6, '0')}`;
     }
     
     // Mouse Events

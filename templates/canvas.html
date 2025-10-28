@@ -347,7 +347,45 @@
                 // Enable download button
                 document.getElementById('download-btn').disabled = false;
                 
-                showStatus(`✅ ${data.message}`, 'success');
+                // Show validation results if any corrections or rejections occurred
+                if (data.validation_results) {
+                    const vr = data.validation_results;
+                    let validationMessage = '';
+                    
+                    if (vr.corrected && vr.corrected.length > 0) {
+                        validationMessage += `\n⚠️ ${vr.corrected.length} fixture(s) adjusted to fit within floorplan`;
+                        console.log('🔧 Corrected fixtures:', vr.corrected);
+                    }
+                    
+                    if (vr.rejected && vr.rejected.length > 0) {
+                        validationMessage += `\n❌ ${vr.rejected.length} fixture(s) rejected (too far outside boundaries)`;
+                        console.log('❌ Rejected fixtures:', vr.rejected);
+                    }
+                    
+                    if (validationMessage) {
+                        showStatus(`✅ ${data.message}${validationMessage}`, vr.rejected.length > 0 ? 'warning' : 'success');
+                    } else {
+                        showStatus(`✅ ${data.message}`, 'success');
+                    }
+                } else {
+                    showStatus(`✅ ${data.message}`, 'success');
+                }
+                
+                // 🔥 TWO-WAY COMMUNICATION: Update canvas with AI-generated changes
+                if (data.updated_canvas_data && editor) {
+                    console.log('🔄 Updating canvas with AI-generated layout...');
+                    
+                    // Reload canvas with updated data (no visual effects)
+                    editor.loadCanvasData(data.updated_canvas_data);
+                    
+                    // Clear selections and prompts since changes are applied
+                    selectedFixtures = [];
+                    movementPrompts = [];
+                    updatePromptDisplay();
+                    
+                    // Show success message
+                    showStatus('✨ Canvas updated! You can see the changes and continue editing.', 'success');
+                }
 
             } catch (error) {
                 console.error('AI generation error:', error);

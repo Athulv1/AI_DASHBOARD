@@ -525,38 +525,87 @@ def extract_geometry_data(entity):
 
 
 def calculate_bounds(fixtures, blueprint):
-    """Calculate bounding box for canvas scaling"""
-    min_x = min_y = float('inf')
-    max_x = max_y = float('-inf')
+    """
+    Calculate TWO sets of bounds:
+    1. Display bounds: Include fixtures + blueprint (for canvas zoom)
+    2. Validation bounds: Only room polylines (for fixture validation)
+    """
+    # First, get ROOM POLYLINE bounds (for validation)
+    room_min_x = room_min_y = float('inf')
+    room_max_x = room_max_y = float('-inf')
     
-    # Check fixture positions
+    entity_count = 0
+    
+    # ONLY use POLYLINES for room boundaries
+    for entity in blueprint:
+        entity_type = entity['type']
+        data = entity['data']
+        layer = entity.get('layer', 'UNKNOWN')
+        
+        if entity_type in ['LWPOLYLINE', 'POLYLINE']:
+            points = data['points']
+            if len(points) < 2:
+                continue
+                
+            total_length = 0
+            for i in range(len(points) - 1):
+                p1, p2 = points[i], points[i+1]
+                total_length += ((p2[0] - p1[0])**2 + (p2[1] - p1[1])**2)**0.5
+            
+            # Only use substantial room polylines (not tiny details or huge site plans)
+            if total_length < 1000 or total_length > 30000:
+                if entity_count == 0 and total_length > 30000:
+                    print(f"   ⚠️ Skipping Polyline: Too long ({total_length:.0f}mm) - probably site boundary")
+                continue
+                
+            for point in points:
+                room_min_x = min(room_min_x, point[0])
+                room_min_y = min(room_min_y, point[1])
+                room_max_x = max(room_max_x, point[0])
+                room_max_y = max(room_max_y, point[1])
+            entity_count += 1
+            if entity_count <= 3:
+                print(f"   Room Polyline {entity_count}: Length={total_length:.0f}mm, Max Y={max(p[1] for p in points):.0f}")
+
+    print(f"📐 Used {entity_count} POLYLINE entities for ROOM boundary")
+    print(f"📐 ROOM BOUNDARIES (for validation):")
+    print(f"   X: [{room_min_x:.0f}, {room_max_x:.0f}]")
+    print(f"   Y: [{room_min_y:.0f}, {room_max_y:.0f}]")
+    
+    # Now calculate DISPLAY bounds (include all fixtures + blueprint)
+    display_min_x = room_min_x if room_min_x != float('inf') else 0
+    display_min_y = room_min_y if room_min_y != float('inf') else 0
+    display_max_x = room_max_x if room_max_x != float('-inf') else 10000
+    display_max_y = room_max_y if room_max_y != float('-inf') else 10000
+    
+    # Expand to include all fixtures (for canvas display)
     for fixture in fixtures:
         x, y = fixture['position']
-        min_x = min(min_x, x)
-        min_y = min(min_y, y)
-        max_x = max(max_x, x)
-        max_y = max(max_y, y)
+        display_min_x = min(display_min_x, x - 500)
+        display_min_y = min(display_min_y, y - 500)
+        display_max_x = max(display_max_x, x + 500)
+        display_max_y = max(display_max_y, y + 500)
     
-    # Check blueprint geometry
-    for entity in blueprint:
-        if entity['type'] == 'LINE':
-            data = entity['data']
-            for point in [data['start'], data['end']]:
-                min_x = min(min_x, point[0])
-                min_y = min(min_y, point[1])
-                max_x = max(max_x, point[0])
-                max_y = max(max_y, point[1])
-    
-    # Add padding
+    print(f"� DISPLAY BOUNDARIES (for canvas):")
+    print(f"   X: [{display_min_x:.0f}, {display_max_x:.0f}]")
+    print(f"   Y: [{display_min_y:.0f}, {display_max_y:.0f}]")
+
+    # Add padding for display
     padding = 1000  # mm
     
     return {
-        'min_x': min_x - padding,
-        'min_y': min_y - padding,
-        'max_x': max_x + padding,
-        'max_y': max_y + padding,
-        'width': max_x - min_x + 2 * padding,
-        'height': max_y - min_y + 2 * padding
+        # Display bounds (for canvas zoom)
+        'min_x': display_min_x,
+        'min_y': display_min_y,
+        'max_x': display_max_x,
+        'max_y': display_max_y,
+        'width': display_max_x - display_min_x + 2 * padding,
+        'height': display_max_y - display_min_y + 2 * padding,
+        # Room bounds (for validation) - stored separately
+        'room_min_x': room_min_x if room_min_x != float('inf') else display_min_x,
+        'room_max_x': room_max_x if room_max_x != float('-inf') else display_max_x,
+        'room_min_y': room_min_y if room_min_y != float('inf') else display_min_y,
+        'room_max_y': room_max_y if room_max_y != float('-inf') else display_max_y,
     }
 
 
@@ -717,16 +766,36 @@ def generate_with_ai():
         original_dxf = session_storage[session_id]['original_dxf']
         json_data = session_storage[session_id]['json_data']
         
-        # Get all fixtures from the current DXF
+        # Extract full canvas data including bounds and fixture sizes
+        canvas_data = extract_canvas_data(json_data, original_dxf)
+        floorplan_bounds = canvas_data.get('bounds', {})
+        print(f"📐 Extracted floorplan bounds: min_x={floorplan_bounds.get('min_x')}, max_x={floorplan_bounds.get('max_x')}, min_y={floorplan_bounds.get('min_y')}, max_y={floorplan_bounds.get('max_y')}")
+        
+        # Extract ROOM bounds for validation (separate from display bounds)
+        room_min_x = floorplan_bounds.get('room_min_x', floorplan_bounds.get('min_x', 0))
+        room_max_x = floorplan_bounds.get('room_max_x', floorplan_bounds.get('max_x', 10000))
+        room_min_y = floorplan_bounds.get('room_min_y', floorplan_bounds.get('min_y', 0))
+        room_max_y = floorplan_bounds.get('room_max_y', floorplan_bounds.get('max_y', 10000))
+        
+        # Get all fixtures from the current DXF with their sizes
         all_fixtures = []
-        for entity in json_data.get('modelspace', []):
-            if entity.get('dxf_type') == 'INSERT':
-                all_fixtures.append({
-                    'name': entity['name'],
-                    'position': entity['insert'][:2],
-                    'rotation': entity.get('rotation', 0),
-                    'layer': entity.get('layer', '0')
-                })
+        fixtures_with_sizes = {}  # For overlap checking
+        for fixture in canvas_data.get('fixtures', []):
+            all_fixtures.append({
+                'name': fixture['name'],
+                'position': fixture['position'],
+                'rotation': fixture.get('rotation', 0),
+                'layer': fixture.get('layer', '0'),
+                'width': fixture.get('width', 300),
+                'height': fixture.get('height', 300)
+            })
+            # Store for overlap checking
+            fixtures_with_sizes[fixture['name']] = {
+                'x': fixture['position'][0],
+                'y': fixture['position'][1],
+                'width': fixture.get('width', 300),
+                'height': fixture.get('height', 300)
+            }
         
         # Parse selected fixtures from user prompt (if any)
         selected_fixture_names = []
@@ -734,9 +803,32 @@ def generate_with_ai():
             # Extract fixture names from "Selected fixtures: X, Y, Z" line
             selected_line = user_prompt.split('\n')[0]
             if 'Selected fixtures:' in selected_line:
+                # Get everything after "Selected fixtures:" and before any other text
                 fixtures_str = selected_line.split('Selected fixtures:')[1].strip()
-                selected_fixture_names = [name.strip() for name in fixtures_str.split(',')]
+                # Split by comma and clean each name - stop at first non-fixture text
+                raw_names = [name.strip() for name in fixtures_str.split(',')]
+                # Filter out any text that contains full sentences or extra instructions
+                selected_fixture_names = []
+                for name in raw_names:
+                    # Stop if we hit descriptive text (contains spaces beyond fixture naming)
+                    words = name.split()
+                    if len(words) > 2 or any(keyword in name.lower() for keyword in ['rearrange', 'move', 'like', 'architect', 'these', 'fixtures']):
+                        # Take only the first part before the extra text
+                        selected_fixture_names.append(words[0] if words else name)
+                        break
+                    selected_fixture_names.append(name)
                 print(f"📌 User selected {len(selected_fixture_names)} fixtures: {selected_fixture_names}")
+        
+        # Load professional architectural rearrangement prompt
+        prompt_file_path = os.path.join(os.path.dirname(__file__), 'prompt_for_rearrange.txt')
+        professional_prompt = ""
+        try:
+            with open(prompt_file_path, 'r', encoding='utf-8') as f:
+                professional_prompt = f.read()
+            print(f"✅ Loaded professional prompt: {len(professional_prompt)} chars")
+        except FileNotFoundError:
+            professional_prompt = ""  # Fallback if file not found
+            print(f"⚠️ Warning: prompt_for_rearrange.txt not found at {prompt_file_path}")
         
         # Create comprehensive AI prompt that understands MOVE, COPY, DELETE, ROTATE, and REARRANGE
         # Include ALL fixture positions (not just first 20) for Gemini to find them
@@ -745,8 +837,10 @@ def generate_with_ai():
             for f in all_fixtures  # Send ALL fixtures, not just [:20]
         ]
         
-        # Check if this is a rearrangement command (user selected multiple fixtures)
-        is_rearrangement = 'rearrange' in user_prompt.lower() or 'organize' in user_prompt.lower() or 'layout' in user_prompt.lower()
+        # Check if this is a rearrangement command (user selected multiple fixtures + rearrange keywords)
+        is_rearrangement = ('rearrange' in user_prompt.lower() or 'organize' in user_prompt.lower() or 
+                           'layout' in user_prompt.lower() or 'architect' in user_prompt.lower()) and len(selected_fixture_names) > 1
+        print(f"🔍 Rearrangement detection: is_rearrangement={is_rearrangement}, selected={len(selected_fixture_names)} fixtures, has_prompt={len(professional_prompt) > 0}")
         
         # Build additional context for Gemini if fixtures are selected
         selection_context = ""
@@ -761,7 +855,122 @@ Do NOT skip any fixtures. Do NOT move only some of them.
 EVERY fixture in the list must appear in your JSON output.
 """
         
-        ai_prompt = f"""You are a DXF fixture modification assistant. Parse the user's command and generate the appropriate JSON modifications.
+        # Build the AI prompt based on whether it's a rearrangement or simple operation
+        if is_rearrangement and professional_prompt and selected_fixture_names:
+            print(f"✅ Using PROFESSIONAL ARCHITECTURAL PROMPT with boundaries and overlap prevention")
+            # Build detailed fixture list with sizes for selected fixtures
+            selected_fixtures_details = []
+            non_selected_fixtures = []
+            for f in all_fixtures:
+                fixture_info = f"  - {f['name']} at ({f['position'][0]:.1f}, {f['position'][1]:.1f}) [Size: {f['width']:.0f}×{f['height']:.0f}mm]"
+                if f['name'] in selected_fixture_names:
+                    selected_fixtures_details.append(fixture_info)
+                else:
+                    non_selected_fixtures.append(fixture_info)
+            
+            # Use professional architectural prompt for rearrangements
+            ai_prompt = f"""{professional_prompt}
+
+===========================================
+CURRENT TASK: PROFESSIONAL REARRANGEMENT
+===========================================
+
+⚠️ CRITICAL FLOORPLAN BOUNDARIES (DO NOT PLACE FIXTURES OUTSIDE):
+- Minimum X: {room_min_x:.1f} mm
+- Maximum X: {room_max_x:.1f} mm
+- Minimum Y: {room_min_y:.1f} mm  
+- Maximum Y: {room_max_y:.1f} mm
+- Floorplan Width: {room_max_x - room_min_x:.1f} mm
+- Floorplan Height: {room_max_y - room_min_y:.1f} mm
+
+� ABSOLUTE BOUNDARY ENFORCEMENT RULES:
+1. For EVERY fixture you place, you MUST verify:
+   - fixture_position_x - (fixture_width/2) >= {room_min_x:.1f}
+   - fixture_position_x + (fixture_width/2) <= {room_max_x:.1f}
+   - fixture_position_y - (fixture_height/2) >= {room_min_y:.1f}
+   - fixture_position_y + (fixture_height/2) <= {room_max_y:.1f}
+
+2. If ANY edge would go outside these boundaries:
+   - MOVE the fixture towards the center
+   - NEVER place it at that position
+   - Keep trying until it fits
+
+3. Add 200mm safety margin from walls:
+   - Effective min_x = {room_min_x + 200:.1f}
+   - Effective max_x = {room_max_x - 200:.1f}
+   - Effective min_y = {room_min_y + 200:.1f}
+   - Effective max_y = {room_max_y - 200:.1f}
+
+�📍 SELECTED FIXTURES TO REARRANGE ({len(selected_fixture_names)} fixtures):
+{chr(10).join(selected_fixtures_details)}
+
+⚠️ EXISTING FIXTURES (DO NOT OVERLAP - THESE STAY IN PLACE):
+{chr(10).join(non_selected_fixtures[:20])}
+{'... and ' + str(len(non_selected_fixtures) - 20) + ' more fixtures' if len(non_selected_fixtures) > 20 else ''}
+
+USER REQUEST:
+{user_prompt}
+
+YOUR CRITICAL TASKS:
+1. Analyze the {len(selected_fixture_names)} selected fixtures and their current positions
+2. Check existing fixture positions to AVOID OVERLAPS
+3. Ensure ALL new positions are WITHIN floorplan boundaries
+4. Apply architectural principles: proper clearances (800-1200mm), circulation paths, grid patterns
+5. Generate ONE MOVE operation for EACH selected fixture
+6. Account for fixture sizes when calculating clearances:
+   - Minimum 800mm clearance between fixture edges
+   - Keep fixtures at least 200mm from walls
+   - Maintain clear circulation aisles (1200mm minimum)
+
+OVERLAP PREVENTION RULES:
+- Before placing at (new_x, new_y), check distance to ALL existing fixtures
+- For each existing fixture at (ex, ey) with size (ew, eh):
+  * Calculate center-to-center distance: sqrt((new_x - ex)² + (new_y - ey)²)
+  * Required minimum distance: (fixture_width + ew)/2 + (fixture_height + eh)/2 + 800mm clearance
+- If overlap detected, shift position by 1000-2000mm to find free space
+
+BOUNDARY VALIDATION:
+- new_x must be between {room_min_x:.1f} and {room_max_x:.1f}
+- new_y must be between {room_min_y:.1f} and {room_max_y:.1f}
+- Account for fixture half-width and half-height when placing near edges
+
+REQUIRED OUTPUT FORMAT (ONLY VALID JSON):
+{{
+  "fixtures": [
+    {{
+      "block_name": "EXACT_FIXTURE_NAME",
+      "operation": "move",
+      "original_position": [current_x, current_y],
+      "new_position": [new_x_within_bounds, new_y_within_bounds],
+      "reason": "Brief architectural explanation"
+    }}
+  ]
+}}
+
+Generate exactly {len(selected_fixture_names)} operations now. NO MARKDOWN, ONLY JSON."""
+            # Log the ROOM boundaries being sent (not display bounds)
+            print(f"📏 Floorplan ROOM boundaries being sent to Gemini:")
+            print(f"   X range: {floorplan_bounds.get('room_min_x', room_min_x):.1f} to {floorplan_bounds.get('room_max_x', room_max_x):.1f} mm")
+            print(f"   Y range: {floorplan_bounds.get('room_min_y', room_min_y):.1f} to {floorplan_bounds.get('room_max_y', room_max_y):.1f} mm")
+        else:
+            print(f"⚠️ Using BASIC PROMPT (not a rearrangement or missing components)")
+            # Use basic prompt for simple move/copy/delete/rotate operations
+            ai_prompt = f"""You are a DXF fixture modification assistant. Parse the user's command and generate the appropriate JSON modifications.
+
+⚠️ CRITICAL FLOORPLAN BOUNDARIES (DO NOT PLACE FIXTURES OUTSIDE):
+- Minimum X: {room_min_x:.1f} mm
+- Maximum X: {room_max_x:.1f} mm
+- Minimum Y: {room_min_y:.1f} mm  
+- Maximum Y: {room_max_y:.1f} mm
+
+🚨 BOUNDARY VALIDATION REQUIRED:
+Before outputting ANY position, verify:
+  - new_x - (fixture_width/2) >= {room_min_x:.1f}
+  - new_x + (fixture_width/2) <= {room_max_x:.1f}
+  - new_y - (fixture_height/2) >= {room_min_y:.1f}
+  - new_y + (fixture_height/2) <= {room_max_y:.1f}
+
+If ANY edge goes outside: REJECT that position and calculate a new one within bounds.
 
 Available fixtures in the DXF file (with current positions):
 {chr(10).join(fixtures_with_pos)}
@@ -842,6 +1051,12 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
         # Call Gemini AI
         print(f"🤖 Calling Gemini AI...")
         print(f"📝 Sending prompt (first 500 chars): {ai_prompt[:500]}...")
+        # Check if boundaries are in the prompt
+        if "CRITICAL FLOORPLAN BOUNDARIES" in ai_prompt:
+            print(f"✅ Boundaries included in prompt")
+        else:
+            print(f"⚠️ WARNING: Boundaries NOT in prompt!")
+        print(f"📊 Total prompt length: {len(ai_prompt)} characters")
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel('gemini-2.0-flash-exp')
@@ -860,6 +1075,34 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
         # Parse modifications
         modifications = json.loads(response_text)
         
+        # Handle both "fixtures" and "operations" formats from Gemini
+        if 'operations' in modifications and 'fixtures' not in modifications:
+            # Convert "operations" format to "fixtures" format
+            print("📝 Converting 'operations' format to 'fixtures' format...")
+            
+            # Build a lookup dict for current fixture positions
+            fixture_positions = {}
+            for f in all_fixtures:
+                fixture_positions[f['name']] = f['position']
+            
+            fixtures_list = []
+            for op in modifications['operations']:
+                fixture_name = op.get('fixture_name', '')
+                # Look up original position from all_fixtures
+                orig_pos = fixture_positions.get(fixture_name, [0, 0])
+                
+                fixture_entry = {
+                    'block_name': fixture_name,
+                    'operation': op.get('operation', 'move').lower(),
+                    'original_position': orig_pos,
+                    'new_position': [op.get('x', 0), op.get('y', 0)],
+                }
+                if 'reason' in op:
+                    fixture_entry['reason'] = op['reason']
+                fixtures_list.append(fixture_entry)
+                print(f"   🔄 Mapped {fixture_name}: {orig_pos} → [{op.get('x', 0)}, {op.get('y', 0)}]")
+            modifications['fixtures'] = fixtures_list
+        
         if 'error' in modifications:
             return jsonify({
                 'success': False,
@@ -872,6 +1115,21 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
         for fix in modifications.get('fixtures', []):
             print(f"   • {fix.get('operation', 'move').upper()}: {fix.get('block_name', 'UNKNOWN')} → {fix.get('new_position', 'N/A')}")
         
+        # Debug: Show bounds being used for validation
+        print(f"\n🎯 Bounds being sent to validation:")
+        print(f"   min_x: {floorplan_bounds.get('min_x')}")
+        print(f"   max_x: {floorplan_bounds.get('max_x')}")
+        print(f"   min_y: {floorplan_bounds.get('min_y')}")
+        print(f"   max_y: {floorplan_bounds.get('max_y')}")
+        print(f"   Fixtures count: {len(canvas_data.get('fixtures', []))}")
+        
+        # 🔥 VALIDATION LAYER: Check and correct out-of-bounds fixtures
+        validation_results = validate_and_correct_fixtures(
+            modifications, 
+            floorplan_bounds, 
+            canvas_data.get('fixtures', [])
+        )
+        
         # Apply modifications (move, copy, delete)
         output_path = apply_ai_modifications(
             session_id,
@@ -880,10 +1138,24 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
         
         # Check if modifications were actually applied
         if not output_path:
+            # Build helpful warning message based on validation results
+            rejected_count = validation_results.get('rejected', 0)
+            rejected_names = validation_results.get('rejected_names', [])
+            
+            if rejected_count > 0:
+                warning_msg = f"⚠️ All {rejected_count} fixtures were outside room boundaries. "
+                warning_msg += f"The fixtures are too large (2600×1700mm) "
+                warning_msg += f"for the detected room (1962×3204mm). Try selecting smaller fixtures or drag them manually on the canvas."
+            else:
+                warning_msg = '⚠️ No changes were made. Please check fixture names and try again.'
+            
             return jsonify({
-                'success': False,
-                'error': 'No changes were made. Please check fixture names and try again.'
-            }), 400
+                'success': True,
+                'warning': warning_msg,
+                'message': warning_msg,
+                'operations': {'moved': 0, 'copied': 0, 'deleted': 0, 'rotated': 0},
+                'validation_results': validation_results
+            }), 200
         
         # Store output path in session
         session_storage[session_id]['ai_output_path'] = output_path
@@ -920,10 +1192,22 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
         
         message = f"✅ Processed: {', '.join(parts)}"
         
+        # Add info about rejected fixtures if any
+        rejected_count = validation_results.get('rejected', 0)
+        if rejected_count > 0:
+            message += f" ⚠️ {rejected_count} fixture(s) rejected (outside room boundaries)"
+        
+        # Extract updated canvas data for real-time canvas update
+        # Re-convert the modified JSON to canvas data
+        updated_canvas_data = extract_canvas_data(session_storage[session_id]['json_data'], original_dxf)
+        
         return jsonify({
             'success': True,
             'message': message,
-            'operations': operations_count
+            'operations': operations_count,
+            'updated_canvas_data': updated_canvas_data,  # Send updated canvas data
+            'modifications': modifications.get('fixtures', []),  # Send list of modified fixtures
+            'validation_results': validation_results  # Send validation info
         })
     
     except json.JSONDecodeError as e:
@@ -939,14 +1223,92 @@ Generate ONLY valid JSON without any markdown formatting or explanations.
         return jsonify({'error': str(e)}), 500
 
 
+def validate_and_correct_fixtures(modifications, bounds, all_fixtures):
+    """
+    SIMPLE validation: Check if fixture is inside floorplan.
+    If YES → keep it, if NO → reject it with message
+    Uses ROOM bounds, not display bounds
+    """
+    # Use room bounds for validation (not display bounds)
+    min_x = bounds.get('room_min_x', bounds.get('min_x', 0))
+    max_x = bounds.get('room_max_x', bounds.get('max_x', 10000))
+    min_y = bounds.get('room_min_y', bounds.get('min_y', 0))
+    max_y = bounds.get('room_max_y', bounds.get('max_y', 10000))
+    
+    print(f"\n🎯 Floorplan boundaries:")
+    print(f"   X: {min_x:.0f} to {max_x:.0f} mm")
+    print(f"   Y: {min_y:.0f} to {max_y:.0f} mm")
+    
+    rejected = []
+    valid_count = 0
+    
+    # Filter out fixtures that are outside boundaries
+    valid_fixtures = []
+    
+    for mod in modifications.get('fixtures', []):
+        fixture_name = mod.get('block_name', 'Unknown')
+        new_pos = mod.get('new_position')
+        
+        if not new_pos:
+            valid_fixtures.append(mod)
+            continue
+        
+        x, y = new_pos[0], new_pos[1]
+        
+        # Get fixture dimensions from all_fixtures
+        fixture_width = 300  # default
+        fixture_height = 300  # default
+        for f in all_fixtures:
+            if f.get('name') == fixture_name:
+                fixture_width = f.get('width', 300)
+                fixture_height = f.get('height', 300)
+                break
+        
+        # Check if ALL EDGES are inside boundaries (not just center)
+        half_width = fixture_width / 2
+        half_height = fixture_height / 2
+        
+        left_edge = x - half_width
+        right_edge = x + half_width
+        bottom_edge = y - half_height
+        top_edge = y + half_height
+        
+        edges_inside = (left_edge >= min_x and right_edge <= max_x and 
+                       bottom_edge >= min_y and top_edge <= max_y)
+        
+        if edges_inside:
+            print(f"   ✅ {fixture_name}: ({x:.0f}, {y:.0f}) [{fixture_width:.0f}×{fixture_height:.0f}mm] - ALL EDGES INSIDE")
+            valid_fixtures.append(mod)
+            valid_count += 1
+        else:
+            print(f"   ❌ {fixture_name}: ({x:.0f}, {y:.0f}) [{fixture_width:.0f}×{fixture_height:.0f}mm] - EDGES OUTSIDE")
+            print(f"      Left:{left_edge:.0f} Right:{right_edge:.0f} Bottom:{bottom_edge:.0f} Top:{top_edge:.0f}")
+            print(f"      Bounds: X[{min_x:.0f},{max_x:.0f}] Y[{min_y:.0f},{max_y:.0f}]")
+            rejected.append(fixture_name)
+    
+    # Update modifications to only include valid fixtures
+    modifications['fixtures'] = valid_fixtures
+    
+    if rejected:
+        print(f"\n⚠️  {len(rejected)} fixtures rejected (outside floorplan):")
+        for name in rejected:
+            print(f"      - {name}")
+    
+    return {
+        'valid': valid_count,
+        'rejected': len(rejected),
+        'rejected_names': rejected
+    }
 def apply_ai_modifications(session_id, modifications):
     """
     Apply AI-generated modifications (MOVE, COPY, DELETE, ROTATE) directly to the DXF file
     Uses the same method as prompt-based model - modifies original DXF, doesn't recreate from JSON
+    Also updates the session JSON data for canvas refresh
     Returns path to the modified DXF file
     """
     original_dxf = session_storage[session_id]['original_dxf']
     filename = session_storage[session_id]['filename']
+    json_data = session_storage[session_id]['json_data']
     
     # Load the ORIGINAL DXF file (preserves format and version)
     print(f"📖 Loading original DXF: {original_dxf}")
@@ -995,6 +1357,15 @@ def apply_ai_modifications(session_id, modifications):
                 changes_made += 1
                 print(f"      ✅ Deleted {block_name}")
             
+            # Also delete from JSON data for canvas update
+            if orig_pos:
+                json_data['modelspace'] = [
+                    e for e in json_data.get('modelspace', [])
+                    if not (e.get('dxf_type') == 'INSERT' and e.get('name') == block_name and
+                           abs(e.get('insert', [0, 0])[0] - orig_pos[0]) < 0.1 and
+                           abs(e.get('insert', [0, 0])[1] - orig_pos[1]) < 0.1)
+                ]
+            
         elif operation == 'copy':
             # Find original fixture and create a copy
             source_entity = None
@@ -1026,6 +1397,18 @@ def apply_ai_modifications(session_id, modifications):
                 )
                 changes_made += 1
                 print(f"      ✅ Copied {block_name} to ({new_pos[0]:.1f}, {new_pos[1]:.1f})")
+                
+                # Also add to JSON data for canvas update
+                for e in json_data.get('modelspace', []):
+                    if e.get('dxf_type') == 'INSERT' and e.get('name') == block_name:
+                        if orig_pos and len(orig_pos) >= 2:
+                            pos = e.get('insert', [0, 0, 0])
+                            if abs(pos[0] - orig_pos[0]) < 0.1 and abs(pos[1] - orig_pos[1]) < 0.1:
+                                # Found source, create copy in JSON
+                                new_json_entity = e.copy()
+                                new_json_entity['insert'] = [new_pos[0], new_pos[1], pos[2] if len(pos) > 2 else 0]
+                                json_data.get('modelspace', []).append(new_json_entity)
+                                break
             elif not source_entity:
                 print(f"      ⚠️  Source fixture not found: {block_name}")
             elif not new_pos:
@@ -1042,6 +1425,14 @@ def apply_ai_modifications(session_id, modifications):
                             entity.dxf.insert = (new_pos[0], new_pos[1], pos.z)
                             changes_made += 1
                             print(f"      ✅ Moved {block_name} to ({new_pos[0]:.1f}, {new_pos[1]:.1f})")
+                            
+                            # Also update in JSON data for canvas update
+                            for e in json_data.get('modelspace', []):
+                                if e.get('dxf_type') == 'INSERT' and e.get('name') == block_name:
+                                    e_pos = e.get('insert', [0, 0, 0])
+                                    if abs(e_pos[0] - orig_pos[0]) < 0.1 and abs(e_pos[1] - orig_pos[1]) < 0.1:
+                                        e['insert'] = [new_pos[0], new_pos[1], e_pos[2] if len(e_pos) > 2 else 0]
+                                        break
                             break
                     elif new_pos and len(new_pos) >= 2:
                         # Move first instance if no position specified
@@ -1049,6 +1440,13 @@ def apply_ai_modifications(session_id, modifications):
                         entity.dxf.insert = (new_pos[0], new_pos[1], pos.z)
                         changes_made += 1
                         print(f"      ✅ Moved {block_name} to ({new_pos[0]:.1f}, {new_pos[1]:.1f})")
+                        
+                        # Also update in JSON data
+                        for e in json_data.get('modelspace', []):
+                            if e.get('dxf_type') == 'INSERT' and e.get('name') == block_name:
+                                e_pos = e.get('insert', [0, 0, 0])
+                                e['insert'] = [new_pos[0], new_pos[1], e_pos[2] if len(e_pos) > 2 else 0]
+                                break
                         break
                     else:
                         print(f"      ⚠️  Invalid position data for {block_name}")
@@ -1069,6 +1467,14 @@ def apply_ai_modifications(session_id, modifications):
                             entity.dxf.rotation = current_rotation + rotation_angle
                             changes_made += 1
                             print(f"      ✅ Rotated {block_name} by {rotation_angle}° (total: {entity.dxf.rotation:.1f}°)")
+                            
+                            # Also update in JSON data
+                            for e in json_data.get('modelspace', []):
+                                if e.get('dxf_type') == 'INSERT' and e.get('name') == block_name:
+                                    e_pos = e.get('insert', [0, 0, 0])
+                                    if abs(e_pos[0] - orig_pos[0]) < 0.1 and abs(e_pos[1] - orig_pos[1]) < 0.1:
+                                        e['rotation'] = e.get('rotation', 0) + rotation_angle
+                                        break
                             break
                     else:
                         # Rotate first instance if no position specified
@@ -1076,11 +1482,20 @@ def apply_ai_modifications(session_id, modifications):
                         entity.dxf.rotation = current_rotation + rotation_angle
                         changes_made += 1
                         print(f"      ✅ Rotated {block_name} by {rotation_angle}° (total: {entity.dxf.rotation:.1f}°)")
+                        
+                        # Also update in JSON data
+                        for e in json_data.get('modelspace', []):
+                            if e.get('dxf_type') == 'INSERT' and e.get('name') == block_name:
+                                e['rotation'] = e.get('rotation', 0) + rotation_angle
+                                break
                         break
     
     if changes_made == 0:
         print(f"   ⚠️  No changes made")
         return None
+    
+    # Update the session JSON data with modifications
+    session_storage[session_id]['json_data'] = json_data
     
     # Set R2018 + MM format (same as prompt-based model)
     doc.header['$INSUNITS'] = 4  # Millimeters
