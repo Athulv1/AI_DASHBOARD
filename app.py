@@ -288,6 +288,39 @@ def calculate_block_sizes(json_data, dxf_path=None):
                 'max_y': 150
             }
     
+    # Fix SCREEN_55 dimensions (special case for 55" TV screens)
+    # SCREEN_55 blocks often have incorrect geometry-based dimensions
+    for block_name in list(block_sizes.keys()):
+        if 'SCREEN_55' in block_name.upper() or 'SCREEN55' in block_name.upper():
+            current_size = block_sizes[block_name]
+            # Check if dimensions look wrong (too narrow or using only geometric primitives)
+            if current_size['width'] < 150:  # 55" TV should be much wider
+                # Use standard 55" TV dimensions (approximately 1209mm × 680mm for 16:9 aspect ratio)
+                # The "it 55inch tv" block has incorrect dimensions (122.8 × 1241mm - too narrow)
+                
+                # IMPORTANT: Maintain the original block offset to preserve position
+                # Original block was at min_x=570.5, we need to keep the same center point
+                original_center_x = (current_size['min_x'] + current_size['max_x']) / 2
+                original_center_y = (current_size['min_y'] + current_size['max_y']) / 2
+                
+                new_width = 1209.0
+                new_height = 680.0
+                
+                new_min_x = original_center_x - new_width / 2
+                new_max_x = original_center_x + new_width / 2
+                new_min_y = original_center_y - new_height / 2
+                new_max_y = original_center_y + new_height / 2
+                
+                print(f"   🔄 {block_name}: {current_size['width']:.1f} × {current_size['height']:.1f} mm → {new_width:.1f} × {new_height:.1f} mm (corrected to standard 55\" TV dimensions)")
+                block_sizes[block_name] = {
+                    'width': new_width,
+                    'height': new_height,
+                    'min_x': new_min_x,
+                    'min_y': new_min_y,
+                    'max_x': new_max_x,
+                    'max_y': new_max_y
+                }
+    
     # Second pass: Resolve nested blocks (blocks that only contain INSERT entities)
     print("🔗 Resolving nested block references...")
     resolved_count = 0
