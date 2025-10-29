@@ -138,12 +138,16 @@ header p {
     overflow: hidden;
     background: #f9fafb;
     margin-bottom: 30px;
+    width: 100%;
+    max-width: 100%;
 }
 
 #canvas {
     display: block;
     cursor: crosshair;
     background: white;
+    width: 100%;
+    height: auto;
 }
 
 .canvas-controls {

@@ -17,12 +17,9 @@ class CanvasEditor {
         this.ctx = this.canvas.getContext('2d');
         this.sessionId = sessionId;
         
-        // Support high-DPI displays for sharper rendering
-        this.dpr = window.devicePixelRatio || 1;
-        
         // Enable high-quality image rendering
         this.ctx.imageSmoothingEnabled = true;
-        this.ctx.imageSmoothingQuality = 'high';
+        this.ctx.imageSmoothingQuality = 'high';  // Use 'high' quality interpolation
         
         // Data
         this.fixtures = [];
@@ -58,6 +55,9 @@ class CanvasEditor {
         this.fixtureImages = new Map();  // Store loaded images
         this.imagesLoaded = false;
         this.loadFixtureImages();
+        
+        // Setup high-DPI canvas for sharp rendering on Retina displays
+        this.setupHighDPICanvas();
         
         // Setup
         this.setupEventListeners();
@@ -217,6 +217,27 @@ class CanvasEditor {
         return bestMatch;  // Returns null if no match found
     }
     
+    /**
+     * Setup high DPI canvas for Retina displays
+     */
+    setupHighDPICanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = this.canvas.getBoundingClientRect();
+        
+        // Set actual size in memory (scaled to account for DPI)
+        this.canvas.width = rect.width * dpr;
+        this.canvas.height = rect.height * dpr;
+        
+        // Scale context to ensure correct drawing operations
+        this.ctx.scale(dpr, dpr);
+        
+        // Reset image quality settings after scaling
+        this.ctx.imageSmoothingEnabled = true;
+        this.ctx.imageSmoothingQuality = 'high';
+        
+        console.log(`📱 Canvas DPI: ${dpr}x (${this.canvas.width}×${this.canvas.height} pixels)`);
+    }
+    
     setupEventListeners() {
         // Mouse events for dragging and selection
         this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
@@ -232,6 +253,12 @@ class CanvasEditor {
         
         // Prevent context menu
         this.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+        
+        // Handle window resize to maintain high-DPI scaling
+        window.addEventListener('resize', () => {
+            this.setupHighDPICanvas();
+            this.render();
+        });
     }
     
     loadCanvasData(data) {
@@ -288,38 +315,28 @@ class CanvasEditor {
     fitToCanvas() {
         if (!this.bounds) return;
         
-        const padding = 100;  // Increased padding for better view
-        const canvasWidth = this.canvas.width - 2 * padding;
-        const canvasHeight = this.canvas.height - 2 * padding;
+        const padding = 50;
+        const rect = this.canvas.getBoundingClientRect();
+        const canvasWidth = rect.width - 2 * padding;
+        const canvasHeight = rect.height - 2 * padding;
         
         const scaleX = canvasWidth / this.bounds.width;
         const scaleY = canvasHeight / this.bounds.height;
         
-        this.scale = Math.min(scaleX, scaleY);  // Removed 0.8 multiplier for proper fit
+        this.scale = Math.min(scaleX, scaleY) * 0.8;
         
-        // Center the view
+        // Center the view (using visual dimensions, not pixel dimensions)
         // Note: Y-axis is flipped (negated scale), so we need to negate the Y offset
-        this.offsetX = this.canvas.width / 2 - (this.bounds.min_x + this.bounds.width / 2) * this.scale;
-        this.offsetY = this.canvas.height / 2 + (this.bounds.min_y + this.bounds.height / 2) * this.scale;
+        this.offsetX = rect.width / 2 - (this.bounds.min_x + this.bounds.width / 2) * this.scale;
+        this.offsetY = rect.height / 2 + (this.bounds.min_y + this.bounds.height / 2) * this.scale;
     }
     
     render() {
-        // Clear canvas with white background for better contrast
-        this.ctx.fillStyle = '#ffffff';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        // Clear canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
         // Save context
         this.ctx.save();
-        
-        // Adaptive image smoothing based on zoom level
-        // When zoomed in (scale > 1), use crisp rendering
-        // When zoomed out (scale < 1), use smooth rendering
-        if (this.scale > 1.5) {
-            this.ctx.imageSmoothingEnabled = false; // Pixel-perfect when zoomed in
-        } else {
-            this.ctx.imageSmoothingEnabled = true;
-            this.ctx.imageSmoothingQuality = 'high';
-        }
         
         // Apply transform
         this.ctx.translate(this.offsetX, this.offsetY);
@@ -342,8 +359,8 @@ class CanvasEditor {
     }
     
     drawBlueprint() {
-        this.ctx.strokeStyle = '#cbd5e1'; // Slightly darker for better visibility
-        this.ctx.lineWidth = Math.max(1.5, 2 / this.scale); // Thicker lines for better visibility
+        this.ctx.strokeStyle = '#e5e7eb';
+        this.ctx.lineWidth = 1 / this.scale;
         
         this.blueprint.forEach(entity => {
             const type = entity.type;
@@ -482,7 +499,7 @@ class CanvasEditor {
             // Draw PNG image instead of rectangle
             this.ctx.save();
             
-            // Enable high-quality image rendering for this specific image
+            // Enable high-quality rendering for this image
             this.ctx.imageSmoothingEnabled = true;
             this.ctx.imageSmoothingQuality = 'high';
             
@@ -492,7 +509,7 @@ class CanvasEditor {
                 this.ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
             }
             
-            // Draw the image
+            // Draw the image with high quality
             // Note: Canvas is Y-flipped, so we need to flip the image vertically
             this.ctx.translate(rectX, rectY + rectHeight);
             this.ctx.scale(1, -1);  // Flip image vertically to match DXF coordinate system
@@ -709,10 +726,8 @@ class CanvasEditor {
     
     onMouseDown(e) {
         const rect = this.canvas.getBoundingClientRect();
-        const scaleX = this.canvas.width / rect.width;
-        const scaleY = this.canvas.height / rect.height;
-        const canvasX = (e.clientX - rect.left) * scaleX;
-        const canvasY = (e.clientY - rect.top) * scaleY;
+        const canvasX = e.clientX - rect.left;
+        const canvasY = e.clientY - rect.top;
         
         // Track mouse down time to detect clicks vs drags
         this.mouseDownTime = Date.now();
@@ -742,10 +757,8 @@ class CanvasEditor {
     
     onMouseMove(e) {
         const rect = this.canvas.getBoundingClientRect();
-        const scaleX = this.canvas.width / rect.width;
-        const scaleY = this.canvas.height / rect.height;
-        const canvasX = (e.clientX - rect.left) * scaleX;
-        const canvasY = (e.clientY - rect.top) * scaleY;
+        const canvasX = e.clientX - rect.left;
+        const canvasY = e.clientY - rect.top;
         
         if (this.isDragging && this.selectedFixture) {
             // Calculate delta in canvas space
@@ -831,10 +844,8 @@ class CanvasEditor {
         if (timeSinceDown > 300) return; // Was a drag, not a click
         
         const rect = this.canvas.getBoundingClientRect();
-        const scaleX = this.canvas.width / rect.width;
-        const scaleY = this.canvas.height / rect.height;
-        const canvasX = (e.clientX - rect.left) * scaleX;
-        const canvasY = (e.clientY - rect.top) * scaleY;
+        const canvasX = e.clientX - rect.left;
+        const canvasY = e.clientY - rect.top;
         
         // Check if mouse moved significantly (more than 5px = drag)
         if (this.mouseDownPos) {
@@ -893,10 +904,8 @@ class CanvasEditor {
         e.preventDefault();
         
         const rect = this.canvas.getBoundingClientRect();
-        const scaleX = this.canvas.width / rect.width;
-        const scaleY = this.canvas.height / rect.height;
-        const mouseX = (e.clientX - rect.left) * scaleX;
-        const mouseY = (e.clientY - rect.top) * scaleY;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
         
         // Zoom factor
         const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
