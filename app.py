@@ -464,6 +464,80 @@ def calculate_block_sizes(json_data, dxf_path=None):
     return block_sizes
 
 
+def extract_block_geometry(json_data):
+    """
+    Extract the actual geometry (lines, circles, arcs, etc.) from each block definition.
+    This allows rendering real fixture shapes on canvas instead of PNG images.
+    
+    Returns:
+        Dictionary mapping block_name -> list of geometry entities
+    """
+    block_geometries = {}
+    
+    for block_name, block_data in json_data.get('blocks', {}).items():
+        geometry = []
+        
+        for entity in block_data.get('entities', []):
+            entity_type = entity.get('dxf_type')
+            
+            if entity_type == 'LINE':
+                geometry.append({
+                    'type': 'LINE',
+                    'start': entity.get('start', [0, 0])[:2],
+                    'end': entity.get('end', [0, 0])[:2]
+                })
+            
+            elif entity_type == 'CIRCLE':
+                geometry.append({
+                    'type': 'CIRCLE',
+                    'center': entity.get('center', [0, 0])[:2],
+                    'radius': entity.get('radius', 0)
+                })
+            
+            elif entity_type == 'ARC':
+                geometry.append({
+                    'type': 'ARC',
+                    'center': entity.get('center', [0, 0])[:2],
+                    'radius': entity.get('radius', 0),
+                    'start_angle': entity.get('start_angle', 0),
+                    'end_angle': entity.get('end_angle', 360)
+                })
+            
+            elif entity_type in ['LWPOLYLINE', 'POLYLINE']:
+                points = entity.get('points', [])
+                if points:
+                    geometry.append({
+                        'type': 'POLYLINE',
+                        'points': [[p[0], p[1]] if len(p) > 1 else p for p in points],
+                        'closed': entity.get('is_closed', False)
+                    })
+            
+            elif entity_type == 'SPLINE':
+                control_points = entity.get('control_points', [])
+                fit_points = entity.get('fit_points', [])
+                points = control_points if control_points else fit_points
+                
+                if points:
+                    geometry.append({
+                        'type': 'SPLINE',
+                        'points': [[p[0], p[1]] if len(p) > 1 else p for p in points]
+                    })
+            
+            elif entity_type == 'ELLIPSE':
+                geometry.append({
+                    'type': 'ELLIPSE',
+                    'center': entity.get('center', [0, 0])[:2],
+                    'major_axis': entity.get('major_axis', [1, 0])[:2],
+                    'ratio': entity.get('ratio', 1.0)
+                })
+        
+        if geometry:
+            block_geometries[block_name] = geometry
+    
+    print(f"📦 Extracted geometry for {len(block_geometries)} blocks")
+    return block_geometries
+
+
 def extract_canvas_data(json_data, dxf_path=None):
     """
     Extract simplified canvas data from DXF JSON
@@ -482,11 +556,17 @@ def extract_canvas_data(json_data, dxf_path=None):
     block_sizes = calculate_block_sizes(json_data, dxf_path)
     print(f"📐 Calculated sizes for {len(block_sizes)} blocks")
     
+    # Extract block geometries for rendering real shapes
+    block_geometries = extract_block_geometry(json_data)
+    
     # Extract fixtures (INSERT entities)
     for entity in json_data.get('modelspace', []):
         if entity.get('dxf_type') == 'INSERT':
             block_name = entity['name']
             size = block_sizes.get(block_name, {'width': 300, 'height': 300, 'min_x': -150, 'min_y': -150, 'max_x': 150, 'max_y': 150})
+            
+            # Get the actual geometry for this block
+            block_geometry = block_geometries.get(block_name, [])
             
             fixtures.append({
                 'id': f"{entity['name']}@{entity['insert'][0]},{entity['insert'][1]}",
@@ -501,7 +581,8 @@ def extract_canvas_data(json_data, dxf_path=None):
                 'block_min_x': size.get('min_x', -size['width']/2),  # Block content offset from origin
                 'block_min_y': size.get('min_y', -size['height']/2),  # Block content offset from origin
                 'block_max_x': size.get('max_x', size['width']/2),
-                'block_max_y': size.get('max_y', size['height']/2)
+                'block_max_y': size.get('max_y', size['height']/2),
+                'geometry': block_geometry  # Include actual DXF geometry
             })
         
         # Extract blueprint geometry (lines, polylines, etc.)
@@ -1297,26 +1378,30 @@ def validate_and_correct_fixtures(modifications, bounds, all_fixtures):
                 fixture_height = f.get('height', 300)
                 break
         
-        # Check if ALL EDGES are inside boundaries (not just center)
+        # Check if CENTER is inside display boundaries (more lenient than checking all edges)
+        # This allows manually positioned fixtures and large fixtures to pass validation
         half_width = fixture_width / 2
         half_height = fixture_height / 2
         
-        left_edge = x - half_width
-        right_edge = x + half_width
-        bottom_edge = y - half_height
-        top_edge = y + half_height
+        # Use display bounds (min_x/max_x) instead of room bounds (room_min_x/room_max_x)
+        # This gives more tolerance for manual positioning
+        display_min_x = bounds.get('min_x', 0)
+        display_max_x = bounds.get('max_x', 10000)
+        display_min_y = bounds.get('min_y', 0)
+        display_max_y = bounds.get('max_y', 10000)
         
-        edges_inside = (left_edge >= min_x and right_edge <= max_x and 
-                       bottom_edge >= min_y and top_edge <= max_y)
+        # Check if center point is within display area (not room area)
+        center_inside = (x >= display_min_x and x <= display_max_x and 
+                        y >= display_min_y and y <= display_max_y)
         
-        if edges_inside:
-            print(f"   ✅ {fixture_name}: ({x:.0f}, {y:.0f}) [{fixture_width:.0f}×{fixture_height:.0f}mm] - ALL EDGES INSIDE")
+        if center_inside:
+            print(f"   ✅ {fixture_name}: ({x:.0f}, {y:.0f}) [{fixture_width:.0f}×{fixture_height:.0f}mm] - CENTER INSIDE DISPLAY")
             valid_fixtures.append(mod)
             valid_count += 1
         else:
-            print(f"   ❌ {fixture_name}: ({x:.0f}, {y:.0f}) [{fixture_width:.0f}×{fixture_height:.0f}mm] - EDGES OUTSIDE")
-            print(f"      Left:{left_edge:.0f} Right:{right_edge:.0f} Bottom:{bottom_edge:.0f} Top:{top_edge:.0f}")
-            print(f"      Bounds: X[{min_x:.0f},{max_x:.0f}] Y[{min_y:.0f},{max_y:.0f}]")
+            print(f"   ❌ {fixture_name}: ({x:.0f}, {y:.0f}) [{fixture_width:.0f}×{fixture_height:.0f}mm] - CENTER OUTSIDE DISPLAY")
+            print(f"      Position: ({x:.0f}, {y:.0f})")
+            print(f"      Display Bounds: X[{display_min_x:.0f},{display_max_x:.0f}] Y[{display_min_y:.0f},{display_max_y:.0f}]")
             rejected.append(fixture_name)
     
     # Update modifications to only include valid fixtures

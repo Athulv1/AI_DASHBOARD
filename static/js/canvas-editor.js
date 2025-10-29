@@ -500,10 +500,10 @@ class CanvasEditor {
             
             this.ctx.restore();
             
-            // Draw border if selected
-            if (isSelected || isMultiSelected) {
-                this.ctx.strokeStyle = isSelected ? '#d97706' : '#2563eb';
-                this.ctx.lineWidth = Math.max(2, 3 / this.scale);
+            // Always draw border for visibility
+            {
+                this.ctx.strokeStyle = isSelected ? '#d97706' : (isMultiSelected ? '#2563eb' : '#6b7280');
+                this.ctx.lineWidth = Math.max(1.5, 2 / this.scale);
                 this.ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
             }
         } else {
@@ -626,7 +626,7 @@ class CanvasEditor {
     }
     
     drawFixtureLegend() {
-        const legendX = this.canvas.width - 250;
+        const legendX = 10;  // Top-left corner
         const legendY = 10;
         const legendWidth = 240;
         const itemHeight = 25;
