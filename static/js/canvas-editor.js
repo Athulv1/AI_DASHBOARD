@@ -37,6 +37,11 @@ class CanvasEditor {
         this.dragStartCanvasPos = null;
         this.mouseDownTime = 0;  // Track click vs drag
         
+        // Pan mode (hold Ctrl to pan)
+        this.isPanning = false;
+        this.panStartOffset = null;
+        this.panStartMouse = null;
+        
         // View transform
         this.scale = 1;
         this.offsetX = 0;
@@ -242,6 +247,10 @@ class CanvasEditor {
         
         // Mouse wheel for zooming
         this.canvas.addEventListener('wheel', this.onWheel.bind(this));
+        
+        // Keyboard events for pan mode (Ctrl key changes cursor)
+        document.addEventListener('keydown', this.onKeyDown.bind(this));
+        document.addEventListener('keyup', this.onKeyUp.bind(this));
         
         // Prevent context menu
         this.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
@@ -732,6 +741,15 @@ class CanvasEditor {
         this.mouseDownTime = Date.now();
         this.mouseDownPos = [canvasX, canvasY];
         
+        // Check if Ctrl key is pressed for pan mode
+        if (e.ctrlKey || e.metaKey) {
+            this.isPanning = true;
+            this.panStartOffset = [this.offsetX, this.offsetY];
+            this.panStartMouse = [canvasX, canvasY];
+            this.canvas.style.cursor = 'grabbing';
+            return;
+        }
+        
         // Transform to world coordinates (Y-axis is flipped with negative scale)
         const worldX = (canvasX - this.offsetX) / this.scale;
         const worldY = -(canvasY - this.offsetY) / this.scale;
@@ -760,6 +778,25 @@ class CanvasEditor {
         const scaleY = this.canvas.height / rect.height;
         const canvasX = (e.clientX - rect.left) * scaleX;
         const canvasY = (e.clientY - rect.top) * scaleY;
+        
+        // Update cursor based on Ctrl key state
+        if ((e.ctrlKey || e.metaKey) && !this.isDragging) {
+            this.canvas.style.cursor = 'grab';
+        } else if (!this.isPanning && !this.isDragging) {
+            this.canvas.style.cursor = 'default';
+        }
+        
+        // Handle panning
+        if (this.isPanning) {
+            const deltaX = canvasX - this.panStartMouse[0];
+            const deltaY = canvasY - this.panStartMouse[1];
+            
+            this.offsetX = this.panStartOffset[0] + deltaX;
+            this.offsetY = this.panStartOffset[1] + deltaY;
+            
+            this.render();
+            return;
+        }
         
         if (this.isDragging && this.selectedFixture) {
             // Calculate delta in canvas space
@@ -796,6 +833,13 @@ class CanvasEditor {
     }
     
     async onMouseUp(e) {
+        // Handle pan mode
+        if (this.isPanning) {
+            this.isPanning = false;
+            this.canvas.style.cursor = (e.ctrlKey || e.metaKey) ? 'grab' : 'default';
+            return;
+        }
+        
         if (!this.isDragging || !this.selectedFixture) {
             this.isDragging = false;
             return;
@@ -1076,5 +1120,21 @@ class CanvasEditor {
     resetView() {
         this.fitToCanvas();
         this.render();
+    }
+    
+    // Keyboard Events for Pan Mode
+    
+    onKeyDown(e) {
+        // Enable pan cursor when Ctrl is pressed
+        if ((e.key === 'Control' || e.key === 'Meta') && !this.isPanning && !this.isDragging) {
+            this.canvas.style.cursor = 'grab';
+        }
+    }
+    
+    onKeyUp(e) {
+        // Disable pan cursor when Ctrl is released
+        if ((e.key === 'Control' || e.key === 'Meta') && !this.isPanning && !this.isDragging) {
+            this.canvas.style.cursor = 'default';
+        }
     }
 }
