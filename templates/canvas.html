@@ -115,10 +115,16 @@
             <div id="status-message" class="status-message"></div>
         </section>
 
-        <!-- Loading Overlay -->
+        <!-- Loading Overlay - Simple Version -->
         <div id="loading-overlay" style="display:none;">
-            <div class="spinner"></div>
-            <p>Processing...</p>
+            <div class="loading-content">
+                <div class="loading-logo">
+                    <div class="spinner-ring"></div>
+                    <div class="loading-icon">🏗️</div>
+                </div>
+                <h2 id="loading-title">Processing Floor Plan</h2>
+                <p class="loading-subtitle" id="loading-subtitle">Please wait while we process your floor plan...</p>
+            </div>
         </div>
     </div>
 
@@ -144,7 +150,9 @@
         // Auto-load DXF from Django-generated file
         async function autoLoadDXFFromUrl(fileUrl) {
             const uploadStatus = document.getElementById('upload-status');
-            uploadStatus.innerHTML = '<div class="loading">📥 Auto-loading DXF file from Django...</div>';
+            
+            showLoading('Loading Floor Plan from Django');
+            updateLoadingSubtitle('Fetching and processing DXF file...');
             
             try {
                 // Call Flask backend to fetch and process the DXF file from URL
@@ -164,12 +172,10 @@
                     throw new Error(data.error);
                 }
 
+                updateLoadingSubtitle('Loading fixture images and rendering canvas...');
+
                 // Store session ID
                 currentSessionId = data.session_id;
-
-                // Hide upload section, show canvas
-                document.getElementById('upload-section').style.display = 'none';
-                document.getElementById('canvas-section').style.display = 'block';
 
                 // Update file info
                 document.getElementById('current-filename').textContent = data.filename;
@@ -179,7 +185,9 @@
                 // Initialize canvas editor
                 editor = new CanvasEditor('canvas', currentSessionId);
                 editor.loadCanvasData(data.canvas_data);
-
+                
+                // DON'T hide loading overlay here!
+                // The CanvasEditor will hide it after all images are loaded and rendered
                 uploadStatus.innerHTML = '<div class="success">✅ DXF file loaded successfully from Django!</div>';
                 console.log('✅ Auto-load complete! Session:', currentSessionId);
                 
@@ -187,6 +195,12 @@
                 console.error('Auto-load error:', error);
                 uploadStatus.innerHTML = `<div class="error">❌ Failed to auto-load: ${error.message}</div>`;
                 uploadStatus.innerHTML += '<div>Please use manual upload instead.</div>';
+                
+                updateLoadingSubtitle('Error: ' + error.message);
+                
+                setTimeout(() => {
+                    hideLoading();
+                }, 3000);
             }
         }
 
@@ -202,12 +216,14 @@
             const uploadStatus = document.getElementById('upload-status');
             uploadStatus.innerHTML = '<div class="loading">📤 Uploading and processing DXF file...</div>';
             
-            showLoading();
+            showLoading('Processing Floor Plan');
 
             const formData = new FormData();
             formData.append('dxf_file', file);
 
             try {
+                updateLoadingSubtitle('Uploading and processing your floor plan...');
+                
                 const response = await fetch('/upload', {
                     method: 'POST',
                     body: formData
@@ -219,12 +235,10 @@
                     throw new Error(data.error);
                 }
 
+                updateLoadingSubtitle('Loading fixture images and rendering canvas...');
+
                 // Store session ID
                 currentSessionId = data.session_id;
-
-                // Hide upload section, show canvas
-                document.getElementById('upload-section').style.display = 'none';
-                document.getElementById('canvas-section').style.display = 'block';
 
                 // Update file info
                 document.getElementById('current-filename').textContent = data.filename;
@@ -234,14 +248,19 @@
                 // Initialize canvas editor
                 editor = new CanvasEditor('canvas', currentSessionId);
                 editor.loadCanvasData(data.canvas_data);
-
-                hideLoading();
-                showStatus('✅ DXF loaded successfully! Drag fixtures to move them.', 'success');
+                
+                // DON'T hide loading overlay here!
+                // The CanvasEditor will hide it after all images are loaded and rendered
 
             } catch (error) {
                 console.error('Upload error:', error);
                 uploadStatus.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
-                hideLoading();
+                
+                updateLoadingSubtitle('Error: ' + error.message);
+                
+                setTimeout(() => {
+                    hideLoading();
+                }, 2000);
             }
         }
 
@@ -293,12 +312,35 @@
             currentSessionId = null;
         }
 
-        function showLoading() {
-            document.getElementById('loading-overlay').style.display = 'flex';
+        // Simple loading functions
+        function showLoading(title = 'Processing Floor Plan') {
+            const overlay = document.getElementById('loading-overlay');
+            document.getElementById('loading-title').textContent = title;
+            overlay.style.display = 'flex';
         }
 
         function hideLoading() {
             document.getElementById('loading-overlay').style.display = 'none';
+        }
+
+        function updateLoadingSubtitle(text) {
+            document.getElementById('loading-subtitle').textContent = text;
+        }
+        
+        // Global function for CanvasEditor to call
+        window.hideLoadingOverlay = function() {
+            hideLoading();
+        }
+
+        // Global function to hide loading overlay (called from CanvasEditor when images loaded)
+        function hideLoadingOverlay() {
+            updateLoadingStep(4, 'completed');
+            updateLoadingSubtitle('✨ Ready! You can now edit the floor plan.');
+            
+            setTimeout(() => {
+                hideLoading();
+                showStatus('✅ Floor plan loaded successfully! Drag fixtures to move them.', 'success');
+            }, 500);
         }
 
         function showStatus(message, type = 'info') {

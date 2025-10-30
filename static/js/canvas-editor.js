@@ -144,6 +144,7 @@ class CanvasEditor {
             'MIRROR_DIFFERENT': 'mirror_different.png',
             'MIRROR': 'mirror.png',
             'PICK_UP_COUNTER': 'pick_up_counter.png',
+            'PICK_UP_WINDOW': 'pickup window.png',
             'SINK_UNIT': 'sink_unit.png',
             'STAFF_RACK': 'staff_rack.png',
             'STORAGE_RACK': 'storage_rack.png',
@@ -171,6 +172,12 @@ class CanvasEditor {
                     // Re-render if data already loaded
                     if (this.fixtures.length > 0) {
                         this.render();
+                        // Hide loading overlay and show canvas after all images rendered
+                        setTimeout(() => {
+                            hideLoadingOverlay();
+                            document.getElementById('canvas-section').style.display = 'block';
+                            document.getElementById('upload-section').style.display = 'none';
+                        }, 100);
                     }
                 }
             };
@@ -181,6 +188,12 @@ class CanvasEditor {
                     this.imagesLoaded = true;
                     if (this.fixtures.length > 0) {
                         this.render();
+                        // Hide loading overlay even if some images failed
+                        setTimeout(() => {
+                            hideLoadingOverlay();
+                            document.getElementById('canvas-section').style.display = 'block';
+                            document.getElementById('upload-section').style.display = 'none';
+                        }, 100);
                     }
                 }
             };
@@ -253,10 +266,11 @@ class CanvasEditor {
         // Auto-fit to canvas
         this.fitToCanvas();
         
-        // Render immediately (removed animation effect)
-        this.render();
+        // DON'T render yet - wait for images to load
+        // Images will trigger render and show canvas when ready
         
         console.log(`✅ Loaded ${this.fixtures.length} fixtures with ${this.fixtureTypes.size} types`);
+        console.log(`⏳ Waiting for ${Object.keys(this.fixtureImages).length} images to load...`);
     }
     
     assignFixtureColors() {
