@@ -42,15 +42,39 @@
                 </div>
             </div>
 
-            <!-- Canvas Container -->
-            <div class="canvas-container">
-                <canvas id="canvas" width="2000" height="1200"></canvas>
-                
-                <!-- Controls Overlay -->
-                <div class="canvas-controls">
-                    <button class="btn btn-zoom" onclick="editor.zoomIn()">🔍+</button>
-                    <button class="btn btn-zoom" onclick="editor.zoomOut()">🔍-</button>
-                    <button class="btn btn-zoom" onclick="editor.resetView()">⟲ Reset</button>
+            <!-- Canvas and AI Prompt Layout -->
+            <div class="canvas-ai-layout">
+                <!-- Left Side: Canvas -->
+                <div class="canvas-side">
+                    <div class="canvas-container">
+                        <canvas id="canvas" width="2000" height="1200"></canvas>
+                        
+                        <!-- Controls Overlay -->
+                        <div class="canvas-controls">
+                            <button class="btn btn-zoom" onclick="editor.zoomIn()">🔍+</button>
+                            <button class="btn btn-zoom" onclick="editor.zoomOut()">🔍-</button>
+                            <button class="btn btn-zoom" onclick="editor.resetView()">⟲ Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: AI Prompt -->
+                <div class="ai-side">
+                    <div class="prompt-section">
+                        <h3>🤖 AI-Prompt </h3>
+                        <div class="prompt-display">
+                            <textarea id="movement-prompt" rows="15" placeholder="Move fixtures on the canvas... prompts will appear here automatically. You can edit them before generating."></textarea>
+                            <div class="prompt-actions">
+                                <button class="btn btn-primary" id="generate-btn" onclick="generateWithAI()" disabled>
+                                    ✨ Generate with AI
+                                </button>
+                                <button class="btn btn-secondary" onclick="clearPrompts()">
+                                    🗑️ Clear Prompts
+                                </button>
+                            </div>
+                            <div id="ai-status" class="ai-status"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -78,23 +102,6 @@
                         <label>Distance Moved:</label>
                         <span id="distance-moved" class="value">0.00 mm</span>
                     </div>
-                </div>
-            </div>
-
-            <!-- AI Prompt Section -->
-            <div class="prompt-section">
-                <h3>🤖 AI-Prompt </h3>
-                <div class="prompt-display">
-                    <textarea id="movement-prompt" rows="6" placeholder="Move fixtures on the canvas... prompts will appear here automatically. You can edit them before generating."></textarea>
-                    <div class="prompt-actions">
-                        <button class="btn btn-primary" id="generate-btn" onclick="generateWithAI()" disabled>
-                            ✨ Generate with AI
-                        </button>
-                        <button class="btn btn-secondary" onclick="clearPrompts()">
-                            🗑️ Clear Prompts
-                        </button>
-                    </div>
-                    <div id="ai-status" class="ai-status"></div>
                 </div>
             </div>
 
