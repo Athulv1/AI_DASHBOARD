@@ -58,5 +58,17 @@
             <p>Version 1.0 | Powered by Flask + HTML5 Canvas + Gemini AI</p>
         </footer>
     </div>
+
+    <script>
+        // Check for autoload parameter and redirect to canvas with DXF file
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoloadFile = urlParams.get('autoload');
+        
+        if (autoloadFile) {
+            console.log('🔄 Auto-loading DXF file:', autoloadFile);
+            // Redirect to canvas with autoload parameter
+            window.location.href = '/canvas?autoload=' + encodeURIComponent(autoloadFile);
+        }
+    </script>
 </body>
 </html>

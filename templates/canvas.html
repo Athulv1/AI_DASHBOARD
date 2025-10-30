@@ -124,6 +124,66 @@
         let movementPrompts = [];  // Store all movement prompts
         let selectedFixtures = [];  // Track selected fixtures for AI rearrangement
 
+        // Check for auto-load parameter on page load
+        window.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const autoloadUrl = urlParams.get('autoload');
+            
+            if (autoloadUrl) {
+                console.log('🔄 Auto-loading DXF file from:', autoloadUrl);
+                await autoLoadDXFFromUrl(autoloadUrl);
+            }
+        });
+
+        // Auto-load DXF from Django-generated file
+        async function autoLoadDXFFromUrl(fileUrl) {
+            const uploadStatus = document.getElementById('upload-status');
+            uploadStatus.innerHTML = '<div class="loading">📥 Auto-loading DXF file from Django...</div>';
+            
+            try {
+                // Call Flask backend to fetch and process the DXF file from URL
+                const response = await fetch('/upload-from-url', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        url: fileUrl
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Store session ID
+                currentSessionId = data.session_id;
+
+                // Hide upload section, show canvas
+                document.getElementById('upload-section').style.display = 'none';
+                document.getElementById('canvas-section').style.display = 'block';
+
+                // Update file info
+                document.getElementById('current-filename').textContent = data.filename;
+                document.getElementById('fixture-count').textContent = 
+                    `${data.canvas_data.fixture_count} fixtures`;
+
+                // Initialize canvas editor
+                editor = new CanvasEditor('canvas', currentSessionId);
+                editor.loadCanvasData(data.canvas_data);
+
+                uploadStatus.innerHTML = '<div class="success">✅ DXF file loaded successfully from Django!</div>';
+                console.log('✅ Auto-load complete! Session:', currentSessionId);
+                
+            } catch (error) {
+                console.error('Auto-load error:', error);
+                uploadStatus.innerHTML = `<div class="error">❌ Failed to auto-load: ${error.message}</div>`;
+                uploadStatus.innerHTML += '<div>Please use manual upload instead.</div>';
+            }
+        }
+
         // Handle file upload
         document.getElementById('dxf-upload').addEventListener('change', async function(e) {
             const file = e.target.files[0];

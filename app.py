@@ -14,9 +14,11 @@ Version: 1.0
 """
 
 from flask import Flask, render_template, request, jsonify, send_file, session
+from flask_cors import CORS
 import os
 import json
 import uuid
+import requests
 from werkzeug.utils import secure_filename
 import ezdxf
 from enhanced_dxf_to_json import dxf_to_json, json_to_dxf
@@ -24,6 +26,7 @@ from ai_fixture_mover import AIFixtureMover
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['OUTPUT_FOLDER'] = 'outputs'
@@ -50,6 +53,81 @@ def index():
 def canvas():
     """Canvas editor page"""
     return render_template('canvas.html')
+
+
+@app.route('/upload-from-url', methods=['POST'])
+def upload_from_url():
+    """
+    Handle DXF file upload from a URL (e.g., from Django)
+    
+    Expects JSON: { "url": "http://localhost:8001/media/..." }
+    
+    Returns:
+        JSON with session_id and canvas_data
+    """
+    try:
+        data = request.get_json()
+        url = data.get('url')
+        
+        if not url:
+            return jsonify({'error': 'No URL provided'}), 400
+        
+        print(f"📥 Fetching DXF from URL: {url}")
+        
+        # Fetch the file from the URL
+        response = requests.get(url, timeout=30)
+        response.raise_for_status()
+        
+        # Generate unique session ID
+        session_id = str(uuid.uuid4())
+        
+        # Extract filename from URL
+        filename = url.split('/')[-1]
+        if not filename.lower().endswith('.dxf'):
+            filename = f"{filename}.dxf"
+        
+        filename = secure_filename(filename)
+        
+        # Save the file
+        upload_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{session_id}_{filename}")
+        with open(upload_path, 'wb') as f:
+            f.write(response.content)
+        
+        print(f"📁 Saved from URL: {filename} → {session_id}")
+        
+        # Convert DXF to JSON
+        print(f"🔄 Converting DXF to JSON...")
+        json_data = dxf_to_json(upload_path)
+        
+        # Store in session
+        session_storage[session_id] = {
+            'original_dxf': upload_path,
+            'filename': filename,
+            'json_data': json_data,
+            'modifications': []
+        }
+        
+        # Extract canvas data
+        canvas_data = extract_canvas_data(json_data, upload_path)
+        
+        print(f"✅ Ready! Session: {session_id}")
+        print(f"   Fixtures: {len(canvas_data['fixtures'])}")
+        
+        return jsonify({
+            'success': True,
+            'session_id': session_id,
+            'filename': filename,
+            'canvas_data': canvas_data
+        })
+    
+    except requests.RequestException as e:
+        print(f"❌ URL fetch error: {e}")
+        return jsonify({'error': f'Failed to fetch file from URL: {str(e)}'}), 500
+    except Exception as e:
+        print(f"❌ Upload error: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/upload', methods=['POST'])
