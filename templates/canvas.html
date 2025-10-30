@@ -3,25 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DXF Canvas Editor - Fixture Mover</title>
+    <title>AI Canvas Editor | Spazeapp Pro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎨 DXF Canvas Fixture Editor</h1>
-            <p>Upload, visualize, drag fixtures, and download modified DXF files</p>
+            <h1>AI Floor Plan Canvas Editor</h1>
+            <p>Professional fixture management with real-time AI-powered layout optimization</p>
+            <div class="ai-badge">
+                ✨ Powered by Thinkneural.ai
+            </div>
         </header>
 
         <!-- Upload Section -->
         <section id="upload-section" class="section">
             <div class="upload-area">
-                <h2>📁 Upload Your DXF File</h2>
+                <h2>📁 Import Floor Plan</h2>
                 <input type="file" id="dxf-upload" accept=".dxf" style="display:none;">
                 <button class="btn btn-primary" onclick="document.getElementById('dxf-upload').click()">
-                    Choose DXF File
+                    📤 Select DXF File
                 </button>
-                <p class="hint">Supports AutoCAD DXF files (max 50MB)</p>
+                <p class="hint">AutoCAD DXF Format | Maximum 50MB | Full Layer Support</p>
                 <div id="upload-status"></div>
             </div>
         </section>
@@ -95,13 +101,13 @@
             <!-- Action Buttons -->
             <div class="actions">
                 <button class="btn btn-success" onclick="downloadDXF()" id="download-btn" disabled>
-                    📥 Download Modified DXF
+                    📥 Export Modified DXF
                 </button>
                 <button class="btn btn-secondary" onclick="resetCanvas()">
-                    🔄 Reset All Changes
+                    🔄 Reset Layout
                 </button>
                 <button class="btn btn-secondary" onclick="showUploadSection()">
-                    📁 Upload New File
+                    📁 Load New Floor Plan
                 </button>
             </div>
 
