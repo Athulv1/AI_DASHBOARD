@@ -150,6 +150,7 @@ class CanvasEditor {
             'MIRROR': 'mirror.png',
             'PICK_UP_COUNTER': 'pick_up_counter.png',
             'PICK_UP_WINDOW': 'pickup window.png',
+            'DOOR': 'Door.png',
             'SINK_UNIT': 'sink_unit.png',
             'STAFF_RACK': 'staff_rack.png',
             'STORAGE_RACK': 'storage_rack.png',
